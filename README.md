@@ -13,3 +13,4 @@ npm install opentype.js
 ## GitHub Resources/Links
 - [react-native-vexflow-example](https://github.com/matt-gardner/react-native-vexflow-example)
 - [react-vexflow](https://github.com/markacola/react-vexflow)
+- [react-native-vexflow-seed](https://github.com/panarch/react-native-vexflow-seed)
