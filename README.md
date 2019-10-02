@@ -8,7 +8,8 @@ My first attempt at making a music note game using React Native
 ```npm install react-native-svg
 npm install vexflow
 npm install svg-path-bounding-box
-npm install opentype.js```
+npm install opentype.js
+```
 ## GitHub Resources/Links
 - [react-native-vexflow-example](https://github.com/matt-gardner/react-native-vexflow-example)
 - [react-vexflow](https://github.com/markacola/react-vexflow)
