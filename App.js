@@ -1,114 +1,90 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
- *
- * @format
  * @flow
  */
 
-import React from 'react';
+import React, { Component } from 'react';
+import {name as appName} from './app.json';
+import { Accidental } from 'vexflow/src/accidental';
+import { Stave } from 'vexflow/src/stave';
+import { StaveNote } from 'vexflow/src/stavenote';
+import { Voice } from 'vexflow/src/voice';
+import { Formatter } from 'vexflow/src/formatter';
+import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
+
 import {
-  SafeAreaView,
+  AppRegistry,
   StyleSheet,
-  ScrollView,
-  View,
   Text,
-  StatusBar,
+  View
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default class ReactNativeVexFlow extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+  runVexFlowCode(context) {
+    const stave = new Stave(100, 150, 200);
+    stave.setContext(context);
+    stave.setClef('treble');
+    stave.setTimeSignature('4/4');
+    stave.setText('VexFlow on React Native!', 3);
+    stave.draw();
+
+    const notes = [
+      new StaveNote({clef: "treble", keys: ["c/4", "e/4"], duration: "q" })
+        .addAccidental(0, new Accidental("##")).addDotToAll(),
+      new StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
+      new StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
+      new StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
+    ];
+
+    const voice = new Voice({num_beats: 4,  beat_value: 4});
+    voice.addTickables(notes);
+
+    const formatter = new Formatter().joinVoices([voice]).formatToStave([voice], stave);
+    voice.draw(context, stave);
+  }
+
+  render() {
+    const context = new ReactNativeSVGContext(NotoFontPack, { width: 400, height: 400 });
+    this.runVexFlowCode(context);
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit index.ios.js
+        </Text>
+        <Text style={styles.instructions}>
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
+        </Text>
+        { context.render() }
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
   },
 });
-
-export default App;

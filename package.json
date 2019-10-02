@@ -10,8 +10,16 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.1"
+    "opentype.js": "^1.1.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.10.1",
+    "react-native": "0.61.1",
+    "react-native-svg": "^9.10.0",
+    "react-native-svg-uri": "^1.2.3",
+    "react-vexflow": "0.0.4",
+    "standalone-vexflow-context": "^0.1.1",
+    "svg-path-bounding-box": "^1.0.4",
+    "vexflow": "^1.2.89"
   },
   "devDependencies": {
     "@babel/core": "7.6.2",
