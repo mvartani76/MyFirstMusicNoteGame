@@ -12,6 +12,9 @@ import { StaveNote } from 'vexflow/src/stavenote';
 import { Voice } from 'vexflow/src/voice';
 import { Formatter } from 'vexflow/src/formatter';
 import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
+import { Dimensions } from 'react-native';
+
+import { Button } from 'react-native-elements';
 
 import {
   AppRegistry,
@@ -26,22 +29,22 @@ export default class ReactNativeVexFlow extends Component {
   }
 
   runVexFlowCode(context) {
-    const stave = new Stave(100, 150, 200);
+
+    const screenWidth = Dimensions.get('window').width;
+    const stave_width = screenWidth / 5;
+    const stave_x_start = 2 * stave_width
+
+
+    const stave = new Stave(stave_x_start, 125, stave_width);
     stave.setContext(context);
     stave.setClef('treble');
-    stave.setTimeSignature('4/4');
-    stave.setText('VexFlow on React Native!', 3);
     stave.draw();
 
     const notes = [
-      new StaveNote({clef: "treble", keys: ["c/4", "e/4"], duration: "q" })
-        .addAccidental(0, new Accidental("##")).addDotToAll(),
-      new StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
-      new StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
-      new StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
+      new StaveNote({clef: "treble", keys: ["c/4"], duration: "q" })
     ];
 
-    const voice = new Voice({num_beats: 4,  beat_value: 4});
+    const voice = new Voice({num_beats: 1,  beat_value: 4});
     voice.addTickables(notes);
 
     const formatter = new Formatter().joinVoices([voice]).formatToStave([voice], stave);
@@ -49,22 +52,26 @@ export default class ReactNativeVexFlow extends Component {
   }
 
   render() {
-    const context = new ReactNativeSVGContext(NotoFontPack, { width: 400, height: 400 });
+
+    const screenWidth = Dimensions.get('window').width;
+    const screenHeight = Dimensions.get('window').height;
+
+    const context = new ReactNativeSVGContext(NotoFontPack, { width: screenWidth, height: screenHeight/2});
     this.runVexFlowCode(context);
+
+
 
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Music Note Game
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <View style={styles.scaler}>
         { context.render() }
+        </View>
+        <Button
+          title="Button"
+        />
       </View>
     );
   }
@@ -78,7 +85,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontFamily: "GoodDog Plain",
+    fontSize: 50,
     textAlign: 'center',
     margin: 10,
   },
@@ -86,5 +94,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  scaler: {
+    transform: [{scaleX: 2.5}, {scaleY: 4.0}],
   },
 });
