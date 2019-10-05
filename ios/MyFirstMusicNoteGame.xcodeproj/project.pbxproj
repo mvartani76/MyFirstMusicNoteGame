@@ -14,6 +14,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		22082593234858D3009B9E6E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 22082592234858D3009B9E6E /* main.jsbundle */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -57,7 +58,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* MyFirstMusicNoteGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyFirstMusicNoteGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MyFirstMusicNoteGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFirstMusicNoteGameTests.m; sourceTree = "<group>"; };
@@ -71,6 +71,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MyFirstMusicNoteGame/main.m; sourceTree = "<group>"; };
 		15077AD748BBA0A86E686A24 /* Pods-MyFirstMusicNoteGame-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFirstMusicNoteGame-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MyFirstMusicNoteGame-tvOS/Pods-MyFirstMusicNoteGame-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		19B9DCE0922B49CD9970D8BB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		22082592234858D3009B9E6E /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		26134E65B0616997BBDD8330 /* libPods-MyFirstMusicNoteGame-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFirstMusicNoteGame-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ADF2DD8DA224D91A23B9E5A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* MyFirstMusicNoteGame-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MyFirstMusicNoteGame-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,7 +160,7 @@
 		13B07FAE1A68108700A75B9A /* MyFirstMusicNoteGame */ = {
 			isa = PBXGroup;
 			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				22082592234858D3009B9E6E /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -403,6 +404,7 @@
 				E285A3DB011C40CEA2152E83 /* Entypo.ttf in Resources */,
 				712AE369CD5B49728351EF33 /* EvilIcons.ttf in Resources */,
 				F91EA995F438434CBBD9BEC8 /* Feather.ttf in Resources */,
+				22082593234858D3009B9E6E /* main.jsbundle in Resources */,
 				363F1373AE5246DFBF92C3E3 /* FontAwesome.ttf in Resources */,
 				0098CFFE62B347A0B12F77B2 /* FontAwesome5_Brands.ttf in Resources */,
 				34BF179E9136455FBDF39E68 /* FontAwesome5_Regular.ttf in Resources */,

@@ -13,7 +13,22 @@ import {
 export default class Home extends Component {
   constructor(props) {
     super(props);
-  }
+
+    this.state = {
+     status:true
+   }
+ }
+
+ 
+
+   handleClick = (buttonNumber) => {
+   		let desiredNumber = 1;
+        if (buttonNumber == desiredNumber) {
+        	console.log("correct");
+        } else {
+        	console.log("inorrect");
+        }
+    }
 
   render() {
     const {navigate} = this.props.navigation;
@@ -26,9 +41,26 @@ export default class Home extends Component {
         		</Text>
         	</View>
         	<View style={styles.midContainer}>
-	        	<Button
-	          	title="Button" onPress={() => navigate('Home', {name: 'Jane'})}
-	        	/>
+        		<View style={styles.buttonContainer}>
+		        	<Button
+		          	title="Button" onPress={ () => this.handleClick(1)}
+		        	/>
+		        </View>
+		        <View style={styles.buttonContainer}>
+		        	<Button
+		          	title="Button" onPress={ () => this.handleClick(2)}
+		        	/>
+		        </View>
+		        <View style={styles.buttonContainer}>
+		        	<Button
+		          	title="Button" onPress={ () => this.handleClick(3)}
+		        	/>
+		        </View>
+		        <View style={styles.buttonContainer}>
+		        	<Button
+		          	title="Button" onPress={ () => this.handleClick(4)}
+		        	/>
+		        </View>
         	</View>
         </View> 
     );
@@ -51,9 +83,13 @@ const styles = StyleSheet.create({
   },
   midContainer: {
   	flex: 2,
+  	flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'blue',
+  },
+  buttonContainer: {
+  	flex: 1,
   },
   welcome: {
     fontFamily: "GoodDog Plain",
