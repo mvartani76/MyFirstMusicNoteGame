@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 
 import {name as appName} from './app.json';
 import { Button } from 'react-native-elements';
+import { LetterButton} from './ButtonUtility.js';
 
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  SafeAreaView
 } from 'react-native';
 
-export default class Home extends Component {
+export default class Game extends Component {
   constructor(props) {
     super(props);
 
@@ -34,12 +36,13 @@ export default class Home extends Component {
     const {navigate} = this.props.navigation;
 
     return (
-   		<View style={styles.container}>
+   		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
         		<Text style={styles.welcome}>
           			Welcome to the Game!
         		</Text>
         	</View>
+        	{/*
         	<View style={styles.midContainer}>
         		<View style={styles.buttonContainer}>
 		        	<Button
@@ -62,7 +65,10 @@ export default class Home extends Component {
 		        	/>
 		        </View>
         	</View>
-        </View> 
+        */}
+        	<LetterButton title="4" onPress={ () => this.handleClick(4) } />
+        	<LetterButton title="1" onPress={ () => this.handleClick(1) } />
+        </SafeAreaView> 
     );
   }
 }
