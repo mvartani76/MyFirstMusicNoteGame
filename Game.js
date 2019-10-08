@@ -32,15 +32,16 @@ export default class Game extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    let titleData = [{title: "1", func: () => this.handleClick(1)},
+    let objectData1 = [ {title: "1", func: () => this.handleClick(1)},
     					{title: "2", func: () => this.handleClick(2)},
     					{title: "4", func: () => this.handleClick(4)},
     					{title: "6", func: () => this.handleClick(6)}];
 
-    let onClickData = [	() => this.handleClick(1),
-    					() => this.handleClick(2),
-    					() => this.handleClick(4),
-    					() => this.handleClick(6)];
+    let objectData2 = [ {title: "3", func: () => this.handleClick(3)},
+    					{title: "5", func: () => this.handleClick(5)},
+    					{title: "7", func: () => this.handleClick(7)},
+    					{title: "9", func: () => this.handleClick(9)}];
+
     return (
    		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
@@ -48,7 +49,10 @@ export default class Game extends Component {
           			Welcome to the Game!
         		</Text>
         	</View>
-        	<LetterButton object={titleData} viewStyle={styles.tempContainer} buttonStyle={styles.bContainer} />
+        	<View style={styles.bottomContainer}>
+	        	<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
+	        	<LetterButton object={objectData2} viewStyle={styles.tempContainer2} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} />
+	        </View>
         </SafeAreaView> 
     );
   }
@@ -63,25 +67,56 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   topContainer: {
-  	flex: 1,
+  	flex: 0.8,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'red',
   },
-  buttonContainer: {
+  bottomContainer: {
+  	flex: 0.2,
+  	flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
+  vContainer: {
   	flex: 1,
+  	flexDirection: 'row',
+  	justifyContent: 'center',
+    alignItems: 'center',
+    height: '50%',
   },
   bContainer: {
   	backgroundColor: 'gray',
+  	flex: 1,
+  	height: '100%',
+  	flexDirection: 'column',
+  	alignItems: 'center',
+  	justifyContent: 'center',
   	margin: 5,
-  	width: 50,
+  	borderRadius: 5,
   },
-  tempContainer: {
-  	flex: 2,
+  tContainer: {
+  	fontSize: 30,
+  },
+  tempContainer1: {
+  	flex: 1,
   	backgroundColor: 'pink',
   	flexDirection: 'row',
   	justifyContent: 'center',
+  	alignItems: 'center',
   	alignItems: 'stretch',
+  	alignSelf: 'stretch',
+  	width: '100%',
+  },
+  tempContainer2: {
+  	flex: 1,
+  	backgroundColor: 'brown',
+  	flexDirection: 'row',
+  	justifyContent: 'center',
+  	alignItems: 'stretch',
+  	alignSelf: 'stretch',
+  	width: '100%',
   },
   welcome: {
     fontFamily: "GoodDog Plain",

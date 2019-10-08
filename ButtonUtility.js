@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
 
 import {
   AppRegistry,
@@ -24,7 +24,14 @@ export class LetterButton extends Component {
       <View style={this.props.viewStyle}>
         {
           this.props.object.map((item, index) => {
-          return <Button key={index} title={item.title} buttonStyle={this.props.buttonStyle} onPress={item.func}/> })
+            return (
+              <View key={index} style={this.props.viewStyle}>
+                <TouchableOpacity style={this.props.buttonStyle} onPress={item.func}>
+                  <Text style={this.props.textStyle}>{item.title}</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          })
         }
       </View>
     );
