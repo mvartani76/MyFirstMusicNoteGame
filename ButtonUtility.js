@@ -22,9 +22,10 @@ export class LetterButton extends Component {
   render() {
     return (
       <View>
-        <View>
-		      <Button title={this.props.title} onPress={ this.handleClick }/>
-		    </View>
+        {
+          this.props.title.map((item, index) => {
+          return <Button key={index} title={item} style={this.props.buttonStyle} onPress={ this.handleClick }/> })
+        }
       </View>
     );
   }

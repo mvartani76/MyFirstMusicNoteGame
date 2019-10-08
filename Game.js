@@ -66,8 +66,8 @@ export default class Game extends Component {
 		        </View>
         	</View>
         */}
-        	<LetterButton title="4" onPress={ () => this.handleClick(4) } />
-        	<LetterButton title="1" onPress={ () => this.handleClick(1) } />
+        	{/*<LetterButton title="4" onPress={ () => this.handleClick(4) } />*/}
+        	<LetterButton title={["1","2","4","6"]} innerStyle={styles.tempContainer} buttonStyle={styles.bContainer} onPress={ () => this.handleClick(1) } />
         </SafeAreaView> 
     );
   }
@@ -96,6 +96,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
   	flex: 1,
+  },
+  bContainer: {
+  	backgroundColor: 'gray',
+  	margin: 10,
+  },
+  tempContainer: {
+  	flex: 2,
+  	backgroundColor: 'pink',
+  	flexDirection: 'column',
   },
   welcome: {
     fontFamily: "GoodDog Plain",
