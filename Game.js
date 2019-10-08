@@ -20,9 +20,7 @@ export default class Game extends Component {
      status:true
    }
  }
-
  
-
    handleClick = (buttonNumber) => {
    		let desiredNumber = 1;
         if (buttonNumber == desiredNumber) {
@@ -34,7 +32,15 @@ export default class Game extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
+    let titleData = [{title: "1", func: () => this.handleClick(1)},
+    					{title: "2", func: () => this.handleClick(2)},
+    					{title: "4", func: () => this.handleClick(4)},
+    					{title: "6", func: () => this.handleClick(6)}];
 
+    let onClickData = [	() => this.handleClick(1),
+    					() => this.handleClick(2),
+    					() => this.handleClick(4),
+    					() => this.handleClick(6)];
     return (
    		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
@@ -43,10 +49,10 @@ export default class Game extends Component {
         		</Text>
         	</View>
         	<LetterButton
-        		title={["1","2","4","6"]}
+        		title={titleData}
         		innerStyle={styles.tempContainer}
         		buttonStyle={styles.bContainer}
-        		onPress={ () => this.handleClick(1) } />
+        		onPress={onClickData} />
         </SafeAreaView> 
     );
   }

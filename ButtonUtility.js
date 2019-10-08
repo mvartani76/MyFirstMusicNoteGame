@@ -17,6 +17,7 @@ export class LetterButton extends Component {
   handleClick = () => {
     // Need to check to prevent null exception. 
     this.props.onPress?.(); // Same as this.props.onPress && this.props.onPress();
+    //console.log(index);
   }
 
   render() {
@@ -24,7 +25,7 @@ export class LetterButton extends Component {
       <View>
         {
           this.props.title.map((item, index) => {
-          return <Button key={index} title={item} style={this.props.buttonStyle} onPress={ this.handleClick }/> })
+          return <Button key={index} title={item.title} style={this.props.buttonStyle} onPress={ item.func }/> })
         }
       </View>
     );
