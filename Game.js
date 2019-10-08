@@ -48,9 +48,7 @@ export default class Game extends Component {
           			Welcome to the Game!
         		</Text>
         	</View>
-        	<LetterButton
-        		object={titleData}
-        		style={styles.bContainer} />
+        	<LetterButton object={titleData} viewStyle={styles.tempContainer} buttonStyle={styles.bContainer} />
         </SafeAreaView> 
     );
   }
@@ -75,12 +73,15 @@ const styles = StyleSheet.create({
   },
   bContainer: {
   	backgroundColor: 'gray',
-  	margin: 10,
+  	margin: 5,
+  	width: 50,
   },
   tempContainer: {
   	flex: 2,
   	backgroundColor: 'pink',
-  	flexDirection: 'column',
+  	flexDirection: 'row',
+  	justifyContent: 'center',
+  	alignItems: 'stretch',
   },
   welcome: {
     fontFamily: "GoodDog Plain",

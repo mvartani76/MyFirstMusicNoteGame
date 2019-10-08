@@ -21,10 +21,10 @@ export class LetterButton extends Component {
 
   render() {
     return (
-      <View>
+      <View style={this.props.viewStyle}>
         {
           this.props.object.map((item, index) => {
-          return <Button key={index} title={item.title} style={this.props.style} onPress={item.func}/> })
+          return <Button key={index} title={item.title} buttonStyle={this.props.buttonStyle} onPress={item.func}/> })
         }
       </View>
     );
