@@ -42,32 +42,11 @@ export default class Game extends Component {
           			Welcome to the Game!
         		</Text>
         	</View>
-        	{/*
-        	<View style={styles.midContainer}>
-        		<View style={styles.buttonContainer}>
-		        	<Button
-		          	title="Button" onPress={ () => this.handleClick(1)}
-		        	/>
-		        </View>
-		        <View style={styles.buttonContainer}>
-		        	<Button
-		          	title="Button" onPress={ () => this.handleClick(2)}
-		        	/>
-		        </View>
-		        <View style={styles.buttonContainer}>
-		        	<Button
-		          	title="Button" onPress={ () => this.handleClick(3)}
-		        	/>
-		        </View>
-		        <View style={styles.buttonContainer}>
-		        	<Button
-		          	title="Button" onPress={ () => this.handleClick(4)}
-		        	/>
-		        </View>
-        	</View>
-        */}
-        	{/*<LetterButton title="4" onPress={ () => this.handleClick(4) } />*/}
-        	<LetterButton title={["1","2","4","6"]} innerStyle={styles.tempContainer} buttonStyle={styles.bContainer} onPress={ () => this.handleClick(1) } />
+        	<LetterButton
+        		title={["1","2","4","6"]}
+        		innerStyle={styles.tempContainer}
+        		buttonStyle={styles.bContainer}
+        		onPress={ () => this.handleClick(1) } />
         </SafeAreaView> 
     );
   }
