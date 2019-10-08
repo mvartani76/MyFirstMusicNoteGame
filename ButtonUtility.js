@@ -17,15 +17,14 @@ export class LetterButton extends Component {
   handleClick = () => {
     // Need to check to prevent null exception. 
     this.props.onPress?.(); // Same as this.props.onPress && this.props.onPress();
-    //console.log(index);
   }
 
   render() {
     return (
       <View>
         {
-          this.props.title.map((item, index) => {
-          return <Button key={index} title={item.title} style={this.props.buttonStyle} onPress={ item.func }/> })
+          this.props.object.map((item, index) => {
+          return <Button key={index} title={item.title} style={this.props.style} onPress={item.func}/> })
         }
       </View>
     );

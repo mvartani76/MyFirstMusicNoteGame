@@ -49,10 +49,8 @@ export default class Game extends Component {
         		</Text>
         	</View>
         	<LetterButton
-        		title={titleData}
-        		innerStyle={styles.tempContainer}
-        		buttonStyle={styles.bContainer}
-        		onPress={onClickData} />
+        		object={titleData}
+        		style={styles.bContainer} />
         </SafeAreaView> 
     );
   }
@@ -71,13 +69,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'red',
-  },
-  midContainer: {
-  	flex: 2,
-  	flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'blue',
   },
   buttonContainer: {
   	flex: 1,
