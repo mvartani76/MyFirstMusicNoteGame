@@ -12,7 +12,7 @@ import { Formatter } from 'vexflow/src/formatter';
 import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
 import { Dimensions } from 'react-native';
 
-import { runVexFlowCode } from './VexUtility.js';
+import { VexFlow } from './VexUtility.js';
 
 import {
   AppRegistry,
@@ -43,13 +43,6 @@ export default class Game extends Component {
   render() {
     const {navigate} = this.props.navigation;
 
-    const screenWidth = Dimensions.get('window').width;
-    const screenHeight = Dimensions.get('window').height;
-
-    const context = new ReactNativeSVGContext(NotoFontPack, { width: screenWidth, height: screenHeight/2});
-    runVexFlowCode(context);
-
-
     let objectData1 = [ {title: "1", func: () => this.handleClick(1)},
     					{title: "2", func: () => this.handleClick(2)},
     					{title: "4", func: () => this.handleClick(4)},
@@ -66,9 +59,7 @@ export default class Game extends Component {
         		<Text style={styles.welcome}>
           			Welcome to the Game!
         		</Text>
-        		<View style={styles.scaler}>
-        			{ context.render() }
-        		</View>
+        		<VexFlow/>
         	</View>
         	<View style={styles.bottomContainer}>
 	        	<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
