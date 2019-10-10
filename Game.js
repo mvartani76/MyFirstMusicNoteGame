@@ -42,6 +42,7 @@ export default class Game extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
+    const screenWidth = Dimensions.get('window').width;
 
     let objectData1 = [ {title: "1", func: () => this.handleClick(1)},
     					{title: "2", func: () => this.handleClick(2)},
@@ -53,13 +54,19 @@ export default class Game extends Component {
     					{title: "7", func: () => this.handleClick(7)},
     					{title: "9", func: () => this.handleClick(9)}];
 
+	let musicObjectData = {	"stave_width": screenWidth / 5,
+							"stave_x_start": 2 * screenWidth / 5,
+							"stave_y_start": 125,
+							"clef": "treble",
+							"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "h", "dots": 1}],
+							"voices": [{"num_beats": 2, "beat_value": 4}]};
     return (
    		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
         		<Text style={styles.welcome}>
           			Welcome to the Game!
         		</Text>
-        		<VexFlow/>
+        		<VexFlow musicObject = {musicObjectData} style={styles.scaler}/>
         	</View>
         	<View style={styles.bottomContainer}>
 	        	<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>

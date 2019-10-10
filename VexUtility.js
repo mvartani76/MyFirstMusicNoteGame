@@ -15,27 +15,33 @@ import {
   SafeAreaView
 } from 'react-native';
 
-export function runVexFlowCode(context) {
+export function runVexFlowCode(context, obj) {
 
-    const screenWidth = Dimensions.get('window').width;
-    const stave_width = screenWidth / 5;
-    const stave_x_start = 2 * stave_width
+    const stave_width = obj.stave_width;
+    const stave_x_start = obj.stave_x_start;
+    const stave_y_start = obj.stave_y_start;
 
 
-    const stave = new Stave(stave_x_start, 125, stave_width);
+    const stave = new Stave(obj.stave_x_start, obj.stave_y_start, obj.stave_width);
     stave.setContext(context);
-    stave.setClef('treble');
+    stave.setClef(obj.clef);
     stave.draw();
 
     const notes = [
-      new StaveNote({clef: "treble", keys: ["c/4"], duration: "q" })
+      new StaveNote({clef: obj.notes.clef, keys: obj.notes[0].keys, duration: obj.notes[0].duration })
     ];
 
-    const voice = new Voice({num_beats: 1,  beat_value: 4});
+    if (obj.notes[0].dots > 0) {
+        notes[0].addDotToAll();
+    }
+
+    const voice = new Voice({num_beats: obj.voices[0].num_beats, beat_value: obj.voices[0].beat_value});
     voice.addTickables(notes);
 
     const formatter = new Formatter().joinVoices([voice]).formatToStave([voice], stave);
     voice.draw(context, stave);
+
+    console.log(obj);
   }
 
 export class VexFlow extends Component {
@@ -49,18 +55,12 @@ export class VexFlow extends Component {
         const screenHeight = Dimensions.get('window').height;
 
         const context = new ReactNativeSVGContext(NotoFontPack, { width: screenWidth, height: screenHeight/2});
-        runVexFlowCode(context);
+        runVexFlowCode(context, this.props.musicObject);
 
         return (
-            <View style={styles.scaler}>
+            <View style={this.props.style}>
                 { context.render() }
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-  scaler: {
-    transform: [{scaleX: 2.5}, {scaleY: 4.0}],
-  },
-});

@@ -31,13 +31,21 @@ export default class Home extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
+    const screenWidth = Dimensions.get('window').width;
+
+    let musicObjectData = { "stave_width": screenWidth / 5,
+              "stave_x_start": 2 * screenWidth / 5,
+              "stave_y_start": 125,
+              "clef": "treble",
+              "notes": [{"clef": "treble", "keys": ["c/4"], "duration": "q"}],
+              "voices": [{"num_beats": 1, "beat_value": 4}]};
 
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Music Note Game
         </Text>
-        <VexFlow/>
+        <VexFlow musicObject = {musicObjectData} style={styles.scaler}/>
         <Button
           title="Button" onPress={() => navigate('Game', {name: 'Jane'})}
         />
