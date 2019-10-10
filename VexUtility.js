@@ -35,6 +35,10 @@ export function runVexFlowCode(context, obj) {
     }
 
     const voice = new Voice({num_beats: obj.voices[0].num_beats, beat_value: obj.voices[0].beat_value});
+
+    // Set the Voice mode to SOFT(2) so the ticks can be added without restrictions.
+    // For example we do not need to have the num beats = 2 if we want to add one half note
+    voice.setMode(2);
     voice.addTickables(notes);
 
     const formatter = new Formatter().joinVoices([voice]).formatToStave([voice], stave);
