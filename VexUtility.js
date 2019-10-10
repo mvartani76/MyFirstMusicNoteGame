@@ -21,8 +21,7 @@ export function runVexFlowCode(context, obj) {
     const stave_x_start = obj.stave_x_start;
     const stave_y_start = obj.stave_y_start;
 
-
-    const stave = new Stave(obj.stave_x_start, obj.stave_y_start, obj.stave_width);
+    const stave = new Stave(obj.stave_x_start, obj.stave_y_start, obj.stave_width, {fill_style: 'black'});
     stave.setContext(context);
     stave.setClef(obj.clef);
     stave.draw();
