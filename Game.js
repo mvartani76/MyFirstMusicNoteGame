@@ -46,7 +46,7 @@ export default class Game extends Component {
 	const screenWidth = Dimensions.get('window').width;
 	randomDuration = Math.floor(Math.random()*this.durationValues.length);
 	randomNote = Math.floor(Math.random()*this.noteValues.length);
-	console.log(randomDuration);
+
    		let desiredNumber = 1;
         if (buttonNumber == desiredNumber) {
         	console.log("correct");
@@ -66,22 +66,15 @@ export default class Game extends Component {
     const {navigate} = this.props.navigation;
     const screenWidth = Dimensions.get('window').width;
 
-    let objectData1 = [ {title: "1", func: () => this.handleClick(1)},
-    					{title: "2", func: () => this.handleClick(2)},
-    					{title: "4", func: () => this.handleClick(4)},
-    					{title: "6", func: () => this.handleClick(6)}];
+    let objectData1 = [ {title: "A", func: () => this.handleClick(1)},
+    					{title: "B", func: () => this.handleClick(2)},
+    					{title: "C", func: () => this.handleClick(4)},
+    					{title: "D", func: () => this.handleClick(6)}];
 
-    let objectData2 = [ {title: "3", func: () => this.handleClick(3)},
-    					{title: "5", func: () => this.handleClick(5)},
-    					{title: "7", func: () => this.handleClick(7)},
-    					{title: "9", func: () => this.handleClick(9)}];
+    let objectData2 = [ {title: "E", func: () => this.handleClick(3)},
+						{title: "F", func: () => this.handleClick(5)},
+    					{title: "G", func: () => this.handleClick(9)}];
 
-	/*let musicObjectData = {	"stave_width": screenWidth / 5,
-							"stave_x_start": 2 * screenWidth / 5,
-							"stave_y_start": 125,
-							"clef": "treble",
-							"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "16", "dots": 0}],
-							"voices": [{"num_beats": 1, "beat_value": 4}]}; */
     return (
    		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
@@ -92,7 +85,7 @@ export default class Game extends Component {
         	</View>
         	<View style={styles.bottomContainer}>
 	        	<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
-	        	<LetterButton object={objectData2} viewStyle={styles.tempContainer2} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} />
+				<LetterButton object={objectData2} viewStyle={styles.tempContainer2} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
 	        </View>
         </SafeAreaView> 
     );
