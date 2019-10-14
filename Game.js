@@ -23,18 +23,40 @@ import {
 } from 'react-native';
 
 export default class Game extends Component {
+
+	durationValues = ["1","2","4","8","16"];
+	noteValues = ["a/4","b/4","c/4","d/4","e/4","f/4","g/4"];
+
   constructor(props) {
     super(props);
+    const screenWidth = Dimensions.get('window').width;
 
     this.state = {
-     status:true
+     status:true,
+     musicObjectData: {	"stave_width": screenWidth / 5,
+							"stave_x_start": 2 * screenWidth / 5,
+							"stave_y_start": 125,
+							"clef": "treble",
+							"notes": [{"clef": "treble", "keys": [this.noteValues[randomNote]], "duration": this.durationValues[0], "dots": 0}],
+							"voices": [{"num_beats": 1, "beat_value": 4}]}
    }
  }
- 
+
    handleClick = (buttonNumber) => {
+	const screenWidth = Dimensions.get('window').width;
+	randomDuration = Math.floor(Math.random()*this.durationValues.length);
+	randomNote = Math.floor(Math.random()*this.noteValues.length);
+	console.log(randomDuration);
    		let desiredNumber = 1;
         if (buttonNumber == desiredNumber) {
         	console.log("correct");
+			this.setState({status: false});
+			this.setState({musicObjectData: {	"stave_width": screenWidth / 5,
+							"stave_x_start": 2 * screenWidth / 5,
+							"stave_y_start": 125,
+							"clef": "treble",
+							"notes": [{"clef": "treble", "keys": [this.noteValues[randomNote]], "duration": this.durationValues[randomDuration], "dots": 0}],
+							"voices": [{"num_beats": 1, "beat_value": 4}]}});
         } else {
         	console.log("inorrect");
         }
@@ -54,19 +76,19 @@ export default class Game extends Component {
     					{title: "7", func: () => this.handleClick(7)},
     					{title: "9", func: () => this.handleClick(9)}];
 
-	let musicObjectData = {	"stave_width": screenWidth / 5,
+	/*let musicObjectData = {	"stave_width": screenWidth / 5,
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
 							"clef": "treble",
-							"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "h", "dots": 1}],
-							"voices": [{"num_beats": 2, "beat_value": 4}]};
+							"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "16", "dots": 0}],
+							"voices": [{"num_beats": 1, "beat_value": 4}]}; */
     return (
    		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
         		<Text style={styles.welcome}>
           			Welcome to the Game!
         		</Text>
-        		<VexFlow musicObject = {musicObjectData} style={styles.scaler}/>
+				<VexFlow musicObject = {this.state.musicObjectData} style={styles.scaler}/>
         	</View>
         	<View style={styles.bottomContainer}>
 	        	<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
