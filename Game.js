@@ -37,7 +37,7 @@ export default class Game extends Component {
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
 							"clef": "treble",
-							"notes": [{"clef": "treble", "keys": [this.noteValues[randomNote]], "duration": this.durationValues[0], "dots": 0}],
+							"notes": [{"clef": "treble", "keys": [this.noteValues[0]], "duration": this.durationValues[0], "dots": 0}],
 							"voices": [{"num_beats": 1, "beat_value": 4}]}
    }
  }
