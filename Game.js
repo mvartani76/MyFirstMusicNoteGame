@@ -26,6 +26,7 @@ export default class Game extends Component {
 
 	durationValues = ["1","2","4","8","16"];
 	noteValues = ["a/4","b/4","c/4","d/4","e/4","f/4","g/4"];
+	clef_value = JSON.stringify(this.props.navigation.getParam('clef','treble')).replace(/\"/g, "");
 
   constructor(props) {
     super(props);
@@ -36,8 +37,8 @@ export default class Game extends Component {
      musicObjectData: {	"stave_width": screenWidth / 5,
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
-							"clef": "treble",
-							"notes": [{"clef": "treble", "keys": [this.noteValues[0]], "duration": this.durationValues[0], "dots": 0}],
+							"clef": this.clef_value,
+							"notes": [{"clef": this.clef_value, "keys": [this.noteValues[0]], "duration": this.durationValues[0], "dots": 0}],
 							"voices": [{"num_beats": 1, "beat_value": 4}]}
    }
  }
@@ -54,8 +55,8 @@ export default class Game extends Component {
 			this.setState({musicObjectData: {	"stave_width": screenWidth / 5,
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
-							"clef": "treble",
-							"notes": [{"clef": "treble", "keys": [this.noteValues[randomNote]], "duration": this.durationValues[randomDuration], "dots": 0}],
+							"clef": this.clef_value,
+							"notes": [{"clef": this.clef_value, "keys": [this.noteValues[randomNote]], "duration": this.durationValues[randomDuration], "dots": 0}],
 							"voices": [{"num_beats": 1, "beat_value": 4}]}});
         } else {
         	console.log("inorrect");

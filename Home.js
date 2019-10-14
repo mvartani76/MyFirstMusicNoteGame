@@ -47,7 +47,7 @@ export default class Home extends Component {
         </Text>
         <VexFlow musicObject = {musicObjectData} style={styles.scaler}/>
         <View style={styles.buttonGroupStyle}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {name: 'Jane'})}>
+          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {name: 'Jane'})}>
             <Text style={styles.buttonTextStyle}>Choose Game</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {name: 'Jane'})}>
