@@ -50,20 +50,13 @@ export default class Game extends Component {
    handleClick = (buttonLabel) => {
 	const screenWidth = Dimensions.get('window').width;
 	this.setState({timerActive:true});
-    const timer = setTimeout(() => this.setState({timerActive:false}), 3000);
+    const timer = setTimeout(() => this.displayNoteAndTimer(screenWidth), 3000);
 
 	this.setState({answered: true});
         if (buttonLabel == this.randomNote.toLowerCase()) {
         	console.log("correct");
-			this.randomNoteCreate(this.durationValues, this.noteValues);
 			this.setState({status: false});
 			this.setState({correct: true});
-			this.setState({musicObjectData: {	"stave_width": screenWidth / 5,
-							"stave_x_start": 2 * screenWidth / 5,
-							"stave_y_start": 125,
-							"clef": this.clef_value,
-							"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
-							"voices": [{"num_beats": 1, "beat_value": 4}]}});
         } else {
 			console.log("incorrect");
 			this.setState({correct: false});
@@ -73,7 +66,24 @@ export default class Game extends Component {
     randomNoteCreate(durationValues, noteValues) {
 		this.randomDuration = Math.floor(Math.random()*durationValues.length);
 		this.randomNoteIndex = Math.floor(Math.random()*noteValues.length);
-		this.randomNote = this.noteValues[this.randomNoteIndex]
+		this.randomNote = this.noteValues[this.randomNoteIndex];
+    }
+
+    displayNoteAndTimer(screenWidth) {
+		this.randomNoteCreate(this.durationValues, this.noteValues);
+		this.setState({timerActive:false});
+		this.setState(
+			{ musicObjectData:
+				{
+					"stave_width": screenWidth / 5,
+					"stave_x_start": 2 * screenWidth / 5,
+					"stave_y_start": 125,
+					"clef": this.clef_value,
+					"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
+					"voices": [{"num_beats": 1, "beat_value": 4}]
+				}
+			}
+		);
     }
 
   render() {
