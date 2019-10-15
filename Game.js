@@ -23,7 +23,10 @@ import {
 } from 'react-native';
 
 export default class Game extends Component {
-
+	_isMounted = false;
+	timeout1 = setTimeout(()=> {},0);
+	timeout2 = setTimeout(()=> {},0);
+	mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "");
 	durationValues = ["1","2","4","8","16"];
 	noteValues = ["a","b","c","d","e","f","g"];
 	clef_value = JSON.stringify(this.props.navigation.getParam('clef','treble')).replace(/\"/g, "");
@@ -35,6 +38,7 @@ export default class Game extends Component {
 		this.randomNoteCreate(this.durationValues, this.noteValues);
 
 	    this.state = {
+			message:"",
 			timerActive:false,
 			status:true,
 			correct: false,
@@ -42,24 +46,35 @@ export default class Game extends Component {
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
 								"clef": this.clef_value,
-								"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[0], "dots": 0}],
+								"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/5"], "duration": this.durationValues[0], "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
 	}
 
+	componentDidMount = () => {
+		this._isMounted = true;
+		this.setState({message:"Component Mounted"});
+    }
+
 	handleClick = (buttonLabel) => {
 		const screenWidth = Dimensions.get('window').width;
-		this.setState({timerActive:true});
-		const timer = setTimeout(() => this.displayNoteAndTimer(screenWidth), 3000);
+		console.log(this.mode);
+		if (this.mode == "game") {
+			this.setState({timerActive:true});
+			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 3000);
 
-		this.setState({answered: true});
-		if (buttonLabel == this.randomNote.toLowerCase()) {
-			console.log("correct");
-			this.setState({status: false});
-			this.setState({correct: true});
-		} else {
-			console.log("incorrect");
-			this.setState({correct: false});
+			this.setState({answered: true});
+			if (buttonLabel == this.randomNote.toLowerCase()) {
+				console.log("correct");
+				this.setState({status: false});
+				this.setState({correct: true});
+			} else {
+				console.log("incorrect");
+				this.setState({correct: false});
+			}
+		}
+		else {
+			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 3000);
 		}
 	}
 
@@ -69,8 +84,12 @@ export default class Game extends Component {
 		this.randomNote = this.noteValues[this.randomNoteIndex];
 	}
 
-    displayNoteAndTimer(screenWidth) {
+    displayNoteAndTimer(screenWidth, note) {
 		this.randomNoteCreate(this.durationValues, this.noteValues);
+		console.log(this.mode);
+		if (this.mode == "practice") {
+			this.randomNote = note;
+		}
 		this.setState({timerActive:false});
 		this.setState(
 			{ musicObjectData:
@@ -84,6 +103,13 @@ export default class Game extends Component {
 				}
 			}
 		);
+    }
+
+    // Clear timers when component unmounts
+    componentWillUnmount = () => {
+		this._isMounted = false;
+		clearTimeout(this.timeout1);
+		clearTimeout(this.timeout2);
     }
 
 	render() {
