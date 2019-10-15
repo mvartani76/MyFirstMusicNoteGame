@@ -25,12 +25,14 @@ import {
 export default class Game extends Component {
 
 	durationValues = ["1","2","4","8","16"];
-	noteValues = ["a/4","b/4","c/4","d/4","e/4","f/4","g/4"];
+	noteValues = ["a","b","c","d","e","f","g"];
 	clef_value = JSON.stringify(this.props.navigation.getParam('clef','treble')).replace(/\"/g, "");
 
   constructor(props) {
     super(props);
     const screenWidth = Dimensions.get('window').width;
+
+    this.randomNoteCreate(this.durationValues, this.noteValues);
 
     this.state = {
      status:true,
@@ -38,49 +40,53 @@ export default class Game extends Component {
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
 							"clef": this.clef_value,
-							"notes": [{"clef": this.clef_value, "keys": [this.noteValues[0]], "duration": this.durationValues[0], "dots": 0}],
+							"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[0], "dots": 0}],
 							"voices": [{"num_beats": 1, "beat_value": 4}]}
    }
  }
 
-   handleClick = (buttonNumber) => {
+   handleClick = (buttonLabel) => {
 	const screenWidth = Dimensions.get('window').width;
-	randomDuration = Math.floor(Math.random()*this.durationValues.length);
-	randomNote = Math.floor(Math.random()*this.noteValues.length);
 
-   		let desiredNumber = 1;
-        if (buttonNumber == desiredNumber) {
+        if (buttonLabel == this.randomNote.toLowerCase()) {
         	console.log("correct");
+			this.randomNoteCreate(this.durationValues, this.noteValues);
 			this.setState({status: false});
 			this.setState({musicObjectData: {	"stave_width": screenWidth / 5,
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
 							"clef": this.clef_value,
-							"notes": [{"clef": this.clef_value, "keys": [this.noteValues[randomNote]], "duration": this.durationValues[randomDuration], "dots": 0}],
+							"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
 							"voices": [{"num_beats": 1, "beat_value": 4}]}});
         } else {
         	console.log("inorrect");
         }
     }
 
+    randomNoteCreate(durationValues, noteValues) {
+		this.randomDuration = Math.floor(Math.random()*durationValues.length);
+		this.randomNoteIndex = Math.floor(Math.random()*noteValues.length);
+		this.randomNote = this.noteValues[this.randomNoteIndex]
+    }
+
   render() {
     const {navigate} = this.props.navigation;
     const screenWidth = Dimensions.get('window').width;
 
-    let objectData1 = [ {title: "A", func: () => this.handleClick(1)},
-    					{title: "B", func: () => this.handleClick(2)},
-    					{title: "C", func: () => this.handleClick(4)},
-    					{title: "D", func: () => this.handleClick(6)}];
+    let objectData1 = [ {title: "A", func: () => this.handleClick("a")},
+						{title: "B", func: () => this.handleClick("b")},
+						{title: "C", func: () => this.handleClick("c")},
+						{title: "D", func: () => this.handleClick("d")}];
 
-    let objectData2 = [ {title: "E", func: () => this.handleClick(3)},
-						{title: "F", func: () => this.handleClick(5)},
-    					{title: "G", func: () => this.handleClick(9)}];
+    let objectData2 = [ {title: "E", func: () => this.handleClick("e")},
+						{title: "F", func: () => this.handleClick("f")},
+						{title: "G", func: () => this.handleClick("g")}];
 
     return (
    		<SafeAreaView style={styles.container}>
    			<View style={styles.topContainer}>
         		<Text style={styles.welcome}>
-          			Welcome to the Game!
+					{this.clef_value == "treble" ? "Treble Notes" : "Bass Notes"}!
         		</Text>
 				<VexFlow musicObject = {this.state.musicObjectData} style={styles.scaler}/>
         	</View>
