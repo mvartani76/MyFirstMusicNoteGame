@@ -61,8 +61,13 @@ export class VexFlow extends Component {
         runVexFlowCode(context, this.props.musicObject);
 
         return (
-            <View style={this.props.style}>
-                { context.render() }
+
+            <View style={this.props.outerStyle}>
+                <View style={this.props.innerStyle}>
+                    <View style={this.props.style}>
+                        { context.render() }
+                    </View>
+                </View>
             </View>
         );
     }

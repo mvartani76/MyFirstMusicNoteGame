@@ -109,11 +109,11 @@ export default class Game extends Component {
 					</View>
 					{/* In order to prevent scaling overlapping other divs/components, need to have two parent views
 						surrounding the Vexflow Component. */}
-					<View style={styles.outerVexFlowContainer}>
-						<View style={styles.innerVexFlowContainer}>
-							<VexFlow musicObject = {this.state.musicObjectData} style={styles.scaler}/>
-						</View>
-					</View>
+					<VexFlow
+						musicObject = {this.state.musicObjectData}
+						outerStyle={styles.outerVexFlowContainer}
+						innerStyle={styles.innerVexFlowContainer}
+						style={styles.scaler}/>
 					<View style={styles.bottomTextView}>
 						{this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Correct</Text>}
 						{!this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Incorrect</Text>}
