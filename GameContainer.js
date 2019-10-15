@@ -24,7 +24,8 @@ import {
   View
 } from 'react-native';
 
-export default class Home extends Component {
+export default class GameContainer extends Component {
+  mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "");
   constructor(props) {
     super(props);
   }
@@ -43,14 +44,14 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Music Note Game
+          Music Note {this.mode}
         </Text>
         <VexFlow musicObject = {musicObjectData} style={styles.scaler}/>
         <View style={styles.buttonGroupStyle}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'treble'})}>
+          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'treble', mode: this.mode})}>
             <Text style={styles.buttonTextStyle}>Treble Notes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass'})}>
+          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
             <Text style={styles.buttonTextStyle}>Bass Notes</Text>
           </TouchableOpacity>
         </View>
