@@ -102,13 +102,23 @@ export default class Game extends Component {
 		return (
 			<SafeAreaView style={styles.container}>
 				<View style={styles.topContainer}>
-					<Text style={styles.welcome}>
-						{this.clef_value == "treble" ? "Treble Notes" : "Bass Notes"}!
-					</Text>
-					<VexFlow musicObject = {this.state.musicObjectData} style={styles.scaler}/>
-					{this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Correct</Text>}
-					{!this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Incorrect</Text>}
-					{!this.state.timerActive && <Text style={styles.answerText}></Text>}
+					<View style={styles.topTextView}>
+						<Text style={styles.welcome}>
+							{this.clef_value == "treble" ? "Treble Notes" : "Bass Notes"}!
+						</Text>
+					</View>
+					{/* In order to prevent scaling overlapping other divs/components, need to have two parent views
+						surrounding the Vexflow Component. */}
+					<View style={styles.outerVexFlowContainer}>
+						<View style={styles.innerVexFlowContainer}>
+							<VexFlow musicObject = {this.state.musicObjectData} style={styles.scaler}/>
+						</View>
+					</View>
+					<View style={styles.bottomTextView}>
+						{this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Correct</Text>}
+						{!this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Incorrect</Text>}
+						{!this.state.timerActive && <Text style={styles.answerText}></Text>}
+					</View>
 				</View>
 				<View style={styles.bottomContainer}>
 					<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
@@ -129,6 +139,7 @@ const styles = StyleSheet.create({
 	},
 	topContainer: {
 		flex: 0.8,
+		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: 'red',
@@ -185,14 +196,39 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		margin: 10,
 	},
+	topTextView: {
+		flex: 0.2,
+		width: "100%",
+		backgroundColor: "aliceblue",
+	},
+	bottomTextView: {
+		flex: 0.1,
+		alignItems: 'stretch',
+		backgroundColor: 'yellow',
+		width: "100%",
+	},
 	answerText: {
-		flex: 0.5,
+		backgroundColor: 'cyan',
 		fontFamily: "GoodDog Plain",
 		fontSize: 30,
 		textAlign: 'center',
 		margin: 10,
 	},
+	innerVexFlowContainer: {
+		height: "80%",
+		backgroundColor: "darkcyan",
+		justifyContent: "center",
+		overflow: "hidden",
+	},
+	outerVexFlowContainer: {
+		overflow: "hidden",
+		justifyContent: "center",
+		flex: 0.7,
+		backgroundColor: "darkblue",
+	},
 	scaler: {
-		transform: [{scaleX: 2.5}, {scaleY: 4.0}],
+		overflow: "hidden",
+		backgroundColor: 'purple',
+		transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
 	},
 });
