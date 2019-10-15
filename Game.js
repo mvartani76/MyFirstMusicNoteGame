@@ -35,7 +35,9 @@ export default class Game extends Component {
     this.randomNoteCreate(this.durationValues, this.noteValues);
 
     this.state = {
+     timerActive:false,
      status:true,
+     correct: false,
      musicObjectData: {	"stave_width": screenWidth / 5,
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
@@ -47,11 +49,15 @@ export default class Game extends Component {
 
    handleClick = (buttonLabel) => {
 	const screenWidth = Dimensions.get('window').width;
+	this.setState({timerActive:true});
+    const timer = setTimeout(() => this.setState({timerActive:false}), 3000);
 
+	this.setState({answered: true});
         if (buttonLabel == this.randomNote.toLowerCase()) {
         	console.log("correct");
 			this.randomNoteCreate(this.durationValues, this.noteValues);
 			this.setState({status: false});
+			this.setState({correct: true});
 			this.setState({musicObjectData: {	"stave_width": screenWidth / 5,
 							"stave_x_start": 2 * screenWidth / 5,
 							"stave_y_start": 125,
@@ -59,7 +65,8 @@ export default class Game extends Component {
 							"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
 							"voices": [{"num_beats": 1, "beat_value": 4}]}});
         } else {
-        	console.log("inorrect");
+			console.log("incorrect");
+			this.setState({correct: false});
         }
     }
 
@@ -89,6 +96,9 @@ export default class Game extends Component {
 					{this.clef_value == "treble" ? "Treble Notes" : "Bass Notes"}!
         		</Text>
 				<VexFlow musicObject = {this.state.musicObjectData} style={styles.scaler}/>
+				{this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Correct</Text>}
+				{!this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Incorrect</Text>}
+				{!this.state.timerActive && <Text style={styles.answerText}></Text>}
         	</View>
         	<View style={styles.bottomContainer}>
 	        	<LetterButton object={objectData1} viewStyle={styles.tempContainer1} viewStyle={styles.vContainer} buttonStyle={styles.bContainer} textStyle={styles.tContainer}/>
@@ -164,6 +174,13 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: 'center',
     margin: 10,
+  },
+  answerText: {
+	flex: 0.5,
+	fontFamily: "GoodDog Plain",
+	fontSize: 30,
+	textAlign: 'center',
+	margin: 10,
   },
   scaler: {
     transform: [{scaleX: 2.5}, {scaleY: 4.0}],
