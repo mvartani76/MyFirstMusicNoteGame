@@ -28,7 +28,7 @@ export function runVexFlowCode(context, obj) {
 
 
     const notes = [
-      new StaveNote({clef: obj.notes[0].clef, keys: obj.notes[0].keys, duration: obj.notes[0].duration })
+      new StaveNote({clef: obj.notes[0].clef, keys: obj.notes[0].keys, duration: obj.notes[0].duration, auto_stem: true })
     ];
 
     if (obj.notes[0].dots > 0) {
