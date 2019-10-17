@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'black',
+		backgroundColor: 'lightgray',
 	},
 	vContainer: {
 		flex: 1,
@@ -218,6 +218,13 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
+		shadowColor: "#000",
+		shadowOpacity: 0.25,
+		shadowRadius: 3.8,
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
 		margin: 5,
 		borderRadius: 5,
 	},
