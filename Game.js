@@ -97,14 +97,24 @@ export default class Game extends Component {
 		this.randomNote = this.noteValues[this.randomNoteIndex];
 	}
 
+	randomOctaveCreateAndMatch(note, clefArray, notesArray) {
+		// Since we do not want the outlier notes way above/below the clefs,
+		// make sure the note with random octave exists in array to display
+		do {
+			octave = clefArray[Math.floor(Math.random()*clefArray.length)];
+			noteOctave = note + octave;
+		} while (!notesArray.includes(noteOctave));
+		return octave;
+	}
+
     displayNoteAndTimer(screenWidth, note) {
 		this.randomNoteCreate(this.durationValues, this.noteValues);
 		// Set the note to the button label if in practice mode
 		if (this.mode == "practice") {
 			if (this.clef_value == 'treble') {
-				this.randomNote = note + this.trebleClefOctaves[Math.floor(Math.random()*this.trebleClefOctaves.length)];
+				this.randomNote = note + this.randomOctaveCreateAndMatch(note, this.trebleClefOctaves, this.trebleNoteValues);
 			} else {
-				this.randomNote = note + this.bassClefOctaves[Math.floor(Math.random()*this.bassClefOctaves.length)];
+				this.randomNote = note + this.randomOctaveCreateAndMatch(note, this.bassClefOctaves, this.bassNoteValues);
 			}
 		}
 		this.setState({timerActive:false});
