@@ -32,11 +32,6 @@ export default class GameContainer extends Component {
 
 		const screenWidth = Dimensions.get('window').width;
 		this.state = {
-			message:"",
-			timerActive: false,
-			disableClick: false,
-			status: true,
-			correct: false,
 			musicObjectData: {	"stave_width": screenWidth / 5,
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
