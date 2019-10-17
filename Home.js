@@ -18,11 +18,11 @@ import { Button } from 'react-native-elements';
 import { VexFlow } from './VexUtility.js';
 
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView
+	AppRegistry,
+	StyleSheet,
+	Text,
+	View,
+	SafeAreaView
 } from 'react-native';
 
 export default class Home extends Component {
@@ -40,12 +40,12 @@ export default class Home extends Component {
 		}
 	}
 
-  render() {
-    const {navigate} = this.props.navigation;
+	render() {
+		const {navigate} = this.props.navigation;
 
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.topContainer}>
+		return (
+			<SafeAreaView style={styles.container}>
+				<View style={styles.topContainer}>
 					<View style={styles.topTextView}>
 						<Text style={styles.welcome}>
 							Music Note {this.mode}
@@ -59,20 +59,20 @@ export default class Home extends Component {
 						innerStyle={styles.innerVexFlowContainer}
 						style={styles.scaler}/>
 				</View>
-        <View style={styles.buttonGroupStyle}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Game'})}>
-            <Text style={styles.buttonTextStyle}>Choose Game</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Practice'})}>
-            <Text style={styles.buttonTextStyle}>Practice</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {name: 'Jane'})}>
-            <Text style={styles.buttonTextStyle}>Settings</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
+				<View style={styles.buttonGroupStyle}>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Game'})}>
+						<Text style={styles.buttonTextStyle}>Choose Game</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Practice'})}>
+						<Text style={styles.buttonTextStyle}>Practice</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {name: 'Jane'})}>
+						<Text style={styles.buttonTextStyle}>Settings</Text>
+					</TouchableOpacity>
+				</View>
+			</SafeAreaView>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
