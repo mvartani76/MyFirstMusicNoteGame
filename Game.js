@@ -26,14 +26,28 @@ export default class Game extends Component {
 	_isMounted = false;
 	timeout1 = setTimeout(()=> {},0);
 	timeout2 = setTimeout(()=> {},0);
-	mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "");
+	mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "").toLowerCase();
 	durationValues = ["1","2","4","8","16"];
-	noteValues = ["a","b","c","d","e","f","g"];
+
+	noteValues = ["a/4", "b/4", "c/4", "d/4", "e/4", "f/4", "g/4", "a/5"];
+
+	trebleNoteValues = ["e/4", "f/4", "g/4", "a/4", "b/4", "c/5", "d/5", "e/5", "f/5", "g/5"];
+	bassNoteValues = ["g/2", "a/2", "b/2", "c/3", "d/3", "e/3", "f/3", "g/3", "a/3"];
+	trebleClefOctaves = ["/4", "/5"];
+	bassClefOctaves = ["/2", "/3"];
+
 	clef_value = JSON.stringify(this.props.navigation.getParam('clef','treble')).replace(/\"/g, "");
 
 	constructor(props) {
 		super(props);
 		const screenWidth = Dimensions.get('window').width;
+
+		// Set noteValues array based on clef
+		if (this.clef_value == 'treble') {
+			this.noteValues = this.trebleNoteValues;
+		} else if (this.clef_value == 'bass') {
+			this.noteValues = this.bassNoteValues;
+		}
 
 		this.randomNoteCreate(this.durationValues, this.noteValues);
 
@@ -46,7 +60,7 @@ export default class Game extends Component {
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
 								"clef": this.clef_value,
-								"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/5"], "duration": this.durationValues[0], "dots": 0}],
+								"notes": [{"clef": this.clef_value, "keys": [this.randomNote], "duration": this.durationValues[0], "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
 	}
@@ -58,13 +72,12 @@ export default class Game extends Component {
 
 	handleClick = (buttonLabel) => {
 		const screenWidth = Dimensions.get('window').width;
-		console.log(this.mode);
 		if (this.mode == "game") {
 			this.setState({timerActive:true});
 			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 3000);
 
 			this.setState({answered: true});
-			if (buttonLabel == this.randomNote.toLowerCase()) {
+			if (buttonLabel == this.randomNote.replace(/[/]|[0-9]/g, "").toLowerCase()) {
 				console.log("correct");
 				this.setState({status: false});
 				this.setState({correct: true});
@@ -74,7 +87,7 @@ export default class Game extends Component {
 			}
 		}
 		else {
-			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 3000);
+			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 500);
 		}
 	}
 
@@ -86,9 +99,13 @@ export default class Game extends Component {
 
     displayNoteAndTimer(screenWidth, note) {
 		this.randomNoteCreate(this.durationValues, this.noteValues);
-		console.log(this.mode);
+		// Set the note to the button label if in practice mode
 		if (this.mode == "practice") {
-			this.randomNote = note;
+			if (this.clef_value == 'treble') {
+				this.randomNote = note + this.trebleClefOctaves[Math.floor(Math.random()*this.trebleClefOctaves.length)];
+			} else {
+				this.randomNote = note + this.bassClefOctaves[Math.floor(Math.random()*this.bassClefOctaves.length)];
+			}
 		}
 		this.setState({timerActive:false});
 		this.setState(
@@ -98,7 +115,7 @@ export default class Game extends Component {
 					"stave_x_start": 2 * screenWidth / 5,
 					"stave_y_start": 125,
 					"clef": this.clef_value,
-					"notes": [{"clef": this.clef_value, "keys": [this.randomNote+"/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
+					"notes": [{"clef": this.clef_value, "keys": [this.randomNote], "duration": this.durationValues[this.randomDuration], "dots": 0}],
 					"voices": [{"num_beats": 1, "beat_value": 4}]
 				}
 			}
