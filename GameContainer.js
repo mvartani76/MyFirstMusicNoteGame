@@ -21,32 +21,50 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  SafeAreaView
 } from 'react-native';
 
 export default class GameContainer extends Component {
   mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "");
-  constructor(props) {
-    super(props);
-  }
+	constructor(props) {
+		super(props);
+
+		const screenWidth = Dimensions.get('window').width;
+		this.state = {
+			message:"",
+			timerActive: false,
+			disableClick: false,
+			status: true,
+			correct: false,
+			musicObjectData: {	"stave_width": screenWidth / 5,
+								"stave_x_start": 2 * screenWidth / 5,
+								"stave_y_start": 125,
+								"clef": "treble",
+								"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "q", "dots": 0}],
+								"voices": [{"num_beats": 1, "beat_value": 4}]}
+		}
+	}
 
   render() {
     const {navigate} = this.props.navigation;
-    const screenWidth = Dimensions.get('window').width;
-
-    let musicObjectData = { "stave_width": screenWidth / 5,
-              "stave_x_start": 2 * screenWidth / 5,
-              "stave_y_start": 125,
-              "clef": "treble",
-              "notes": [{"clef": "treble", "keys": ["c/4"], "duration": "q"}],
-              "voices": [{"num_beats": 1, "beat_value": 4}]};
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Music Note {this.mode}
-        </Text>
-        <VexFlow musicObject = {musicObjectData} style={styles.scaler}/>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.topContainer}>
+          <View style={styles.topTextView}>
+            <Text style={styles.welcome}>
+              Music Note {this.mode}
+            </Text>
+          </View>
+          {/* In order to prevent scaling overlapping other divs/components, need to have two parent views
+            surrounding the Vexflow Component. */}
+          <VexFlow
+            musicObject = {this.state.musicObjectData}
+            outerStyle={styles.outerVexFlowContainer}
+            innerStyle={styles.innerVexFlowContainer}
+            style={styles.scaler}/>
+        </View>
         <View style={styles.buttonGroupStyle}>
           <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'treble', mode: this.mode})}>
             <Text style={styles.buttonTextStyle}>Treble Notes</Text>
@@ -54,8 +72,14 @@ export default class GameContainer extends Component {
           <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
             <Text style={styles.buttonTextStyle}>Bass Notes</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
+            <Text style={styles.buttonTextStyle}>Rhythms</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
+            <Text style={styles.buttonTextStyle}>Symbols</Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -67,26 +91,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  	topContainer: {
+		flex: 0.7,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: 'red',
+	},
   welcome: {
     fontFamily: "GoodDog Plain",
     fontSize: 50,
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   buttonGroupStyle: {
-    flex: 1,
+    flex: 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: "80%",
+    backgroundColor: 'pink',
   },
   buttonStyles: {
+    flex: 2,
     justifyContent: 'center',
     borderRadius: 5,
-    height: 50,
-    
+    //height: 50,
+    alignSelf: 'stretch',
     margin: 5,
     backgroundColor: "red",
     shadowColor: "#000",
@@ -103,7 +133,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: "white",
   },
+  	topTextView: {
+		flex: 0.2,
+		width: "100%",
+		backgroundColor: "aliceblue",
+	},
+  innerVexFlowContainer: {
+    height: "80%",
+    backgroundColor: "darkcyan",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  outerVexFlowContainer: {
+    overflow: "hidden",
+    justifyContent: "center",
+    flex: 0.7,
+    backgroundColor: "darkblue",
+  },
   scaler: {
-    transform: [{scaleX: 2.5}, {scaleY: 4.0}],
+    overflow: "hidden",
+    backgroundColor: 'purple',
+    transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
   },
 });
