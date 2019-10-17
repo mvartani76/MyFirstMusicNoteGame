@@ -53,8 +53,9 @@ export default class Game extends Component {
 
 	    this.state = {
 			message:"",
-			timerActive:false,
-			status:true,
+			timerActive: false,
+			disableClick: false,
+			status: true,
 			correct: false,
 			musicObjectData: {	"stave_width": screenWidth / 5,
 								"stave_x_start": 2 * screenWidth / 5,
@@ -72,22 +73,28 @@ export default class Game extends Component {
 
 	handleClick = (buttonLabel) => {
 		const screenWidth = Dimensions.get('window').width;
-		if (this.mode == "game") {
-			this.setState({timerActive:true});
-			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 3000);
 
-			this.setState({answered: true});
-			if (buttonLabel == this.randomNote.replace(/[/]|[0-9]/g, "").toLowerCase()) {
-				console.log("correct");
-				this.setState({status: false});
-				this.setState({correct: true});
-			} else {
-				console.log("incorrect");
-				this.setState({correct: false});
+		// Only allow the button handler to operate if enabled
+		if (this.state.disableClick == false) {
+			// Disable further button clicks until note is displayed
+			this.setState({disableClick: true});
+			if (this.mode == "game") {
+				this.setState({timerActive:true});
+				this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 3000);
+
+				this.setState({answered: true});
+				if (buttonLabel == this.randomNote.replace(/[/]|[0-9]/g, "").toLowerCase()) {
+					console.log("correct");
+					this.setState({status: false});
+					this.setState({correct: true});
+				} else {
+					console.log("incorrect");
+					this.setState({correct: false});
+				}
 			}
-		}
-		else {
-			this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 500);
+			else {
+				this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 500);
+			}
 		}
 	}
 
@@ -130,6 +137,8 @@ export default class Game extends Component {
 				}
 			}
 		);
+		// Enable button clicks
+		this.setState({disableClick: false});
     }
 
     // Clear timers when component unmounts
