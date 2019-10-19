@@ -27,7 +27,7 @@ import {
 
 export default class GameContainer extends Component {
 	mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "");
-		constructor(props) {
+	constructor(props) {
 		super(props);
 
 		const screenWidth = Dimensions.get('window').width;
@@ -67,10 +67,10 @@ export default class GameContainer extends Component {
 					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
 						<Text style={styles.buttonTextStyle}>Bass Notes</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'treble', mode: this.mode})}>
 						<Text style={styles.buttonTextStyle}>Rhythms</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'bass', mode: this.mode})}>
 						<Text style={styles.buttonTextStyle}>Symbols</Text>
 					</TouchableOpacity>
 				</View>
