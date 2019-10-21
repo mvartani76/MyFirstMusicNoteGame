@@ -35,6 +35,8 @@ export default class Home extends Component {
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
 								"clef": "treble",
+								"num_lines" : 5,
+								"left_bar": true, "right_bar": true,
 								"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "q", "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}

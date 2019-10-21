@@ -36,6 +36,8 @@ export default class GameContainer extends Component {
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
 								"clef": "treble",
+								"num_lines" : 5,
+								"left_bar": true, "right_bar": true,
 								"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "q", "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
@@ -67,10 +69,10 @@ export default class GameContainer extends Component {
 					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
 						<Text style={styles.buttonTextStyle}>Bass Notes</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'treble', mode: this.mode})}>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'rhythm', mode: this.mode})}>
 						<Text style={styles.buttonTextStyle}>Rhythms</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'bass', mode: this.mode})}>
+					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'symbols', mode: this.mode})}>
 						<Text style={styles.buttonTextStyle}>Symbols</Text>
 					</TouchableOpacity>
 				</View>

@@ -48,6 +48,7 @@ export default class PickerGame extends Component {
 		super(props);
 		const screenWidth = Dimensions.get('window').width;
 		this.randomNoteCreate(this.durationValues, this.noteValues);
+		console.log(this.clef_value);
 		durationValue = 1;
 	    this.state = {
 			message: "",
@@ -61,7 +62,9 @@ export default class PickerGame extends Component {
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
 								"clef": this.clef_value,
-								"notes": [{"clef": this.clef_value, "keys": [this.randomNote], "duration": this.durationValues[3], "dots": 0}],
+								"num_lines" : 0,
+								"left_bar": false, "right_bar": false,
+								"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[3], "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
 	}

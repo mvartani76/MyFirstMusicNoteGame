@@ -61,6 +61,8 @@ export default class Game extends Component {
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
 								"clef": this.clef_value,
+								"num_lines" : 5,
+								"left_bar": true, "right_bar": true,
 								"notes": [{"clef": this.clef_value, "keys": [this.randomNote], "duration": this.durationValues[0], "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
@@ -132,6 +134,8 @@ export default class Game extends Component {
 					"stave_x_start": 2 * screenWidth / 5,
 					"stave_y_start": 125,
 					"clef": this.clef_value,
+					"num_lines" : 5,
+					"left_bar": true, "right_bar": true,
 					"notes": [{"clef": this.clef_value, "keys": [this.randomNote], "duration": this.durationValues[this.randomDuration], "dots": 0}],
 					"voices": [{"num_beats": 1, "beat_value": 4}]
 				}

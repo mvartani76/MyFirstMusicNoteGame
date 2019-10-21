@@ -21,15 +21,22 @@ export function runVexFlowCode(context, obj) {
     const stave_x_start = obj.stave_x_start;
     const stave_y_start = obj.stave_y_start;
 
-    const stave = new Stave(obj.stave_x_start, obj.stave_y_start, obj.stave_width, {fill_style: 'black'});
+    const stave = new Stave(obj.stave_x_start, obj.stave_y_start, obj.stave_width,
+        {fill_style: 'black', num_lines: obj.num_lines, left_bar: obj.left_bar, right_bar: obj.right_bar});
     stave.setContext(context);
-    stave.setClef(obj.clef);
+
+    // In order to display the rhythms and symbols without a clef, need to check the clef input
+    // If not treble/bass, still need to set the input as treble to correctly draw the note
+    if ((obj.clef == "treble") || (obj.clef == "bass")) {
+        stave.setClef(obj.clef);
+    } else {
+		obj.notes[0].clef = "treble";
+    }
     stave.draw();
 
-
     const notes = [
-      new StaveNote({clef: obj.notes[0].clef, keys: obj.notes[0].keys, duration: obj.notes[0].duration, auto_stem: true })
-    ];
+		new StaveNote({clef: obj.notes[0].clef, keys: obj.notes[0].keys, duration: obj.notes[0].duration, auto_stem: true })
+	];
 
     if (obj.notes[0].dots > 0) {
         notes[0].addDotToAll();
