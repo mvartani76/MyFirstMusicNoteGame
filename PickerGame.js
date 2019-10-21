@@ -59,7 +59,7 @@ export default class PickerGame extends Component {
 			status: true,
 			correct: false,
 			musicObjectData: {	"stave_width": screenWidth / 5,
-								"stave_x_start": 2 * screenWidth / 5,
+								"stave_x_start": 0.43 * screenWidth,
 								"stave_y_start": 125,
 								"clef": this.clef_value,
 								"num_lines" : 0,
@@ -177,7 +177,7 @@ export default class PickerGame extends Component {
 				<View style={styles.topContainer}>
 					<View style={styles.topTextView}>
 						<Text style={styles.welcome}>
-							{this.clef_value == "treble" ? "Treble Notes" : "Bass Notes"}!
+							{this.clef_value == "rhythm" ? "Rhythms" : "Symbols"}!
 						</Text>
 					</View>
 					{/* In order to prevent scaling overlapping other divs/components, need to have two parent views
