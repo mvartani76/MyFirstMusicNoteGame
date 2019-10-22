@@ -40,7 +40,6 @@ export default class PickerGame extends Component {
 	bassClefOctaves = ["/2", "/3"];
 	durationLabels = ["sixteenth note", "eighth note", "quarter note", "half note", "whole note"];
 	durationValues = ["16", "8", "4", "2", "1"];
-	//durationValue = 1;
 
 	clef_value = JSON.stringify(this.props.navigation.getParam('clef','treble')).replace(/\"/g, "");
 
@@ -48,8 +47,7 @@ export default class PickerGame extends Component {
 		super(props);
 		const screenWidth = Dimensions.get('window').width;
 		this.randomNoteCreate(this.durationValues, this.noteValues);
-		console.log(this.clef_value);
-		durationValue = 1;
+
 	    this.state = {
 			message: "",
 			rhythmValue: 3,
@@ -64,7 +62,7 @@ export default class PickerGame extends Component {
 								"clef": this.clef_value,
 								"num_lines" : 0,
 								"left_bar": false, "right_bar": false,
-								"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[3], "dots": 0}],
+								"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
 	}
@@ -73,10 +71,7 @@ export default class PickerGame extends Component {
 		const screenWidth = Dimensions.get('window').width;
 		console.log(value);
 		this.setState({rhythmValue: value});
-		console.log(this.state.rhythmValue);
-		console.log(this.durationValues[this.state.rhythmValue]);
-		this.durationValue = value;
-		console.log(this.state.musicObjectData);
+		this.setState({durationValue: value});
 	}
 
 	componentDidMount = () => {
@@ -148,10 +143,10 @@ export default class PickerGame extends Component {
 			{ musicObjectData:
 				{
 					"stave_width": screenWidth / 5,
-					"stave_x_start": 2 * screenWidth / 5,
+					"stave_x_start": 0.43 * screenWidth,
 					"stave_y_start": 125,
 					"clef": this.clef_value,
-					"notes": [{"clef": this.clef_value, "keys": ["e/4"], "duration": this.durationValues[this.state.durationValue], "dots": 0}],
+					"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
 					"voices": [{"num_beats": 1, "beat_value": 4}]
 				}
 			}
@@ -198,7 +193,7 @@ export default class PickerGame extends Component {
 						mode="dialog"
 						style={styles.onePicker}
 						itemStyle={styles.onePickerItem}
-						selectedValue = {this.state.rhythmValue}
+						selectedValue = {this.state.durationValue}
 						onValueChange = {this.updateValue}>
 							{this.durationLabels.map((item, index) => {
    								return (<Picker.Item label={item} value={index} key={index} />);
@@ -206,7 +201,7 @@ export default class PickerGame extends Component {
 					</Picker>
 					<View style={styles.bottomButtonContainer}>
 						<TouchableOpacity style={styles.bottomButtonView} onPress={() => this.handleClick(this.state.durationValue)}>
-							<Text style={styles.buttonTextStyle}>{this.durationLabels[this.durationValue]}</Text>
+							<Text style={styles.buttonTextStyle}>{this.durationLabels[this.state.durationValue]}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
