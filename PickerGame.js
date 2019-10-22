@@ -30,7 +30,6 @@ export default class PickerGame extends Component {
 	timeout1 = setTimeout(()=> {},0);
 	timeout2 = setTimeout(()=> {},0);
 	mode = JSON.stringify(this.props.navigation.getParam('mode','game')).replace(/\"/g, "").toLowerCase();
-	//durationValues = ["1","2","4","8","16"];
 
 	noteValues = ["a/4", "b/4", "c/4", "d/4", "e/4", "f/4", "g/4", "a/5"];
 
@@ -38,8 +37,13 @@ export default class PickerGame extends Component {
 	bassNoteValues = ["g/2", "a/2", "b/2", "c/3", "d/3", "e/3", "f/3", "g/3", "a/3"];
 	trebleClefOctaves = ["/4", "/5"];
 	bassClefOctaves = ["/2", "/3"];
-	durationLabels = ["sixteenth note", "eighth note", "quarter note", "half note", "whole note"];
-	durationValues = ["16", "8", "4", "2", "1"];
+	// Duration Labels needs to be aligned with durationValues
+	durationLabels =	["sixteenth note", "dotted 16th note", "eighth note", "dotted 8th note",
+						 "quarter note", "dotted quarter note", "half note", "dotted half note",
+						 "whole note"];
+	// Duration Values for the dotted notes are just place holders
+	// durationValues needs to be aligned with durationLabels
+	durationValues = ["16", "dot", "8", "dot", "4", "dot", "2", "dot", "1"];
 
 	clef_value = JSON.stringify(this.props.navigation.getParam('clef','treble')).replace(/\"/g, "");
 
@@ -62,7 +66,7 @@ export default class PickerGame extends Component {
 								"clef": this.clef_value,
 								"num_lines" : 0,
 								"left_bar": false, "right_bar": false,
-								"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
+								"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[this.randomDurationIndex], "dots": this.randomDot}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
 	}
@@ -115,6 +119,15 @@ export default class PickerGame extends Component {
 		this.randomDuration = Math.floor(Math.random()*durationValues.length);
 		this.randomNoteIndex = Math.floor(Math.random()*noteValues.length);
 		this.randomNote = this.noteValues[this.randomNoteIndex];
+		if (this.durationValues[this.randomDuration] == "dot") {
+			this.randomDurationIndex = this.randomDuration - 1;
+			this.randomDot = 1;
+		}
+		else {
+			this.randomDurationIndex = this.randomDuration;
+			this.randomDot = 0;
+		}
+
 	}
 
 	randomOctaveCreateAndMatch(note, clefArray, notesArray) {
@@ -146,7 +159,7 @@ export default class PickerGame extends Component {
 					"stave_x_start": 0.43 * screenWidth,
 					"stave_y_start": 125,
 					"clef": this.clef_value,
-					"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[this.randomDuration], "dots": 0}],
+					"notes": [{"clef": this.clef_value, "keys": ["g/4"], "duration": this.durationValues[this.randomDurationIndex], "dots": this.randomDot}],
 					"voices": [{"num_beats": 1, "beat_value": 4}]
 				}
 			}
