@@ -13,6 +13,7 @@ import { Voice } from 'vexflow/src/voice';
 import { Formatter } from 'vexflow/src/formatter';
 import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
 import { Dimensions, TouchableOpacity } from 'react-native';
+import { AnimatedButton } from './ButtonUtility.js';
 
 import { Button } from 'react-native-elements';
 import { VexFlow } from './VexUtility.js';
@@ -43,6 +44,12 @@ export default class GameContainer extends Component {
 		}
 	}
 
+	// Need to pass in mynav here since it is undefined for some reason even though
+	// it is passed in the props... maybe nested props cause problems?
+	handlePress(mynav, page, clef, mode) {
+		mynav.navigate(page, {clef: clef, mode: mode})
+	}
+
 	render() {
 	    const {navigate} = this.props.navigation;
 
@@ -63,18 +70,34 @@ export default class GameContainer extends Component {
 						style={styles.scaler}/>
 				</View>
 				<View style={styles.buttonGroupStyle}>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'treble', mode: this.mode})}>
-						<Text style={styles.buttonTextStyle}>Treble Notes</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {clef: 'bass', mode: this.mode})}>
-						<Text style={styles.buttonTextStyle}>Bass Notes</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'rhythm', mode: this.mode})}>
-						<Text style={styles.buttonTextStyle}>Rhythms</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('PickerGame', {clef: 'symbols', mode: this.mode})}>
-						<Text style={styles.buttonTextStyle}>Symbols</Text>
-					</TouchableOpacity>
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Treble Notes"
+									navigation = {this.props.navigation}
+									value = {{page: "Game", clef: "treble", mode: this.mode}}
+									func={this.handlePress} />
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Bass Notes"
+									navigation = {this.props.navigation}
+									value = {{page: "Game", clef: "bass", mode: this.mode}}
+									func={this.handlePress} />
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Rhythms"
+									navigation = {this.props.navigation}
+									value = {{page: "PickerGame", clef: "rhythm", mode: this.mode}}
+									func={this.handlePress} />
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Symbols"
+									navigation = {this.props.navigation}
+									value = {{page: "PickerGame", clef: "symbols", mode: this.mode}}
+									func={this.handlePress} />
 				</View>
 			</SafeAreaView>
 		);
@@ -150,5 +173,11 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		backgroundColor: 'purple',
 		transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
+	},
+		animatedButtonStyle: {
+		flex:1,
+		borderRadius: 5,
+		justifyContent: 'center',
+		backgroundColor:'green'
 	},
 });
