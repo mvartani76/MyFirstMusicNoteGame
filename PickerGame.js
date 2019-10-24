@@ -60,6 +60,8 @@ export default class PickerGame extends Component {
 			disableClick: false,
 			status: true,
 			correct: false,
+			score: 0,
+			question_number: 0,
 			musicObjectData: {	"stave_width": screenWidth / 5,
 								"stave_x_start": 0.43 * screenWidth,
 								"stave_y_start": 125,
@@ -99,10 +101,12 @@ export default class PickerGame extends Component {
 					console.log("correct");
 					this.setState({status: false});
 					this.setState({correct: true});
+					this.setState({score: this.state.score + 1});
 				} else {
 					console.log("incorrect");
 					this.setState({correct: false});
 				}
+				this.setState({question_number: this.state.question_number + 1});
 			}
 			else {
 				this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, value)}, 500);
@@ -194,7 +198,7 @@ export default class PickerGame extends Component {
 					<View style={styles.bottomTextView}>
 						{this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Correct</Text>}
 						{!this.state.correct && this.state.timerActive && <Text style={styles.answerText}>Incorrect</Text>}
-						{!this.state.timerActive && <Text style={styles.answerText}></Text>}
+						{!this.state.timerActive && <Text style={styles.answerText}>{this.state.score} / {this.state.question_number}</Text>}
 					</View>
 				</View>
 				<View style={styles.bottomContainer}>
