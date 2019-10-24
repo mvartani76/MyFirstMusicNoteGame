@@ -54,9 +54,9 @@ export class AnimatedButton extends Component {
 		}).start();
 	}
 
+	// This handleClick has parameters passed in so needed to be changed from LetterButton variant
 	handleClick = () => {
-		// Need to check to prevent null exception.
-		this.props.onPress?.(); // Same as this.props.onPress && this.props.onPress();
+		this.props.func(this.props.navigation, this.props.value['page'],this.props.value['clef'],this.props.value['mode'])
 	}
 
 	componentDidMount() {
@@ -83,8 +83,9 @@ export class AnimatedButton extends Component {
 	}
 
 	render() {
+
 		return (
-			<TouchableOpacity style={this.props.buttonStyle} onPress={this.props.func}>
+			<TouchableOpacity style={this.props.buttonStyle} onPress={this.handleClick}>
 				<Animated.View style={	[this.props.animatedStyle,
 										{transform: [{  scale: this.state.animated.interpolate({
 											inputRange: [0,1],
