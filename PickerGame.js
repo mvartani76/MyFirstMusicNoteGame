@@ -11,7 +11,7 @@ import { Voice } from 'vexflow/src/voice';
 import { Formatter } from 'vexflow/src/formatter';
 import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
 import { Dimensions, TouchableOpacity } from 'react-native';
-
+import { AnimatedButton } from './ButtonUtility.js';
 import { VexFlow } from './VexUtility.js';
 
 import {
@@ -213,9 +213,14 @@ export default class PickerGame extends Component {
 							})} 
 					</Picker>
 					<View style={styles.bottomButtonContainer}>
-						<TouchableOpacity style={styles.bottomButtonView} onPress={() => this.handleClick(this.state.durationValue)}>
-							<Text style={styles.buttonTextStyle}>{this.durationLabels[this.state.durationValue]}</Text>
-						</TouchableOpacity>
+						<AnimatedButton buttonStyle={styles.bottomButtonView}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text={this.durationLabels[this.state.durationValue]}
+									navigation = {this.props.navigation}
+									value = {this.state.durationValue}
+									func={this.handleClick}
+									buttonMode = "set" />
 					</View>
 				</View>
 			</SafeAreaView> 
@@ -325,12 +330,28 @@ const styles = StyleSheet.create({
 	},
 	bottomButtonContainer: {
 		flex: 0.5,
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: "80%",
+		backgroundColor: 'pink',
 	},
 	bottomButtonView: {
 		alignSelf: 'center',
 		backgroundColor: 'red',
-		width: "80%",
+		flex: 1,
 		borderRadius: 5,
+		justifyContent: 'center',
+		borderRadius: 5,
+		alignSelf: 'stretch',
+		margin: 5,
+		backgroundColor: "red",
+		shadowColor: "#000",
+		shadowOpacity: 0.25,
+		shadowRadius: 3.8,
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
 	},
 	buttonTextStyle: {
 		fontFamily: "GoodDog Plain",
@@ -342,5 +363,18 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		backgroundColor: 'purple',
 		transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
+	},
+	animatedButtonStyle: {
+		flex:1,
+		borderRadius: 5,
+		justifyContent: 'center',
+		backgroundColor:'green',
+		shadowColor: "#000",
+		shadowOpacity: 0.25,
+		shadowRadius: 3.8,
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
 	},
 });
