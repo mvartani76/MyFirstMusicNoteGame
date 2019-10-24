@@ -56,7 +56,12 @@ export class AnimatedButton extends Component {
 
 	// This handleClick has parameters passed in so needed to be changed from LetterButton variant
 	handleClick = () => {
-		this.props.func(this.props.navigation, this.props.value['page'],this.props.value['clef'],this.props.value['mode'])
+		if (this.props.buttonMode == "navigate") {
+			this.props.func(this.props.navigation, this.props.value['page'],this.props.value['clef'],this.props.value['mode'])
+		}
+		else {
+			this.props.func(this.props.value)
+		}
 	}
 
 	componentDidMount() {
