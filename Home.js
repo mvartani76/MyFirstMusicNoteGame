@@ -90,12 +90,18 @@ export default class Home extends Component {
 									text="Choose Game"
 									navigation = {this.props.navigation}
 									func={this.handlePress} />
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Practice'})}>
-						<Text style={styles.buttonTextStyle}>Practice</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Game', {name: 'Jane'})}>
-						<Text style={styles.buttonTextStyle}>Settings</Text>
-					</TouchableOpacity>
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Practice"
+									navigation = {this.props.navigation}
+									func={this.handlePress} />
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Settings"
+									navigation = {this.props.navigation}
+									func={this.handlePress} />
 				</View>
 			</SafeAreaView>
 		);
