@@ -93,10 +93,6 @@ export default class PickerGame extends Component {
 			if (this.mode == "game") {
 				this.setState({timerActive:true});
 				this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, value)}, 3000);
-				console.log("test");
-				console.log(value);
-				console.log(this.randomDuration);
-
 
 				this.setState({answered: true});
 				if (value == this.randomDuration) {
