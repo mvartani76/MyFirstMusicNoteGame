@@ -170,6 +170,13 @@ const styles = StyleSheet.create({
 		flex:1,
 		borderRadius: 5,
 		justifyContent: 'center',
-		backgroundColor:'green'
+		backgroundColor:'green',
+		shadowColor: "#000",
+		shadowOpacity: 0.25,
+		shadowRadius: 3.8,
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
 	}
 });

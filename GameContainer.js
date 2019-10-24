@@ -174,10 +174,17 @@ const styles = StyleSheet.create({
 		backgroundColor: 'purple',
 		transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
 	},
-		animatedButtonStyle: {
+	animatedButtonStyle: {
 		flex:1,
 		borderRadius: 5,
 		justifyContent: 'center',
-		backgroundColor:'green'
+		backgroundColor:'green',
+		shadowColor: "#000",
+		shadowOpacity: 0.25,
+		shadowRadius: 3.8,
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
 	},
 });
