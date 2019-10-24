@@ -16,7 +16,7 @@ import { Dimensions, TouchableOpacity } from 'react-native';
 
 import { Button } from 'react-native-elements';
 import { VexFlow } from './VexUtility.js';
-
+import { AnimatedButton } from './ButtonUtility.js';
 import {
 	AppRegistry,
 	StyleSheet,
@@ -45,20 +45,12 @@ export default class Home extends Component {
 		}
 	}
 
-	animateButton(value, duration){
-		Animated.timing(this.state.animated,{
-			toValue: value,
-			duration: duration,
-			easing: Easing.elastic(1.5),
-		}).start();
-	}
-
 	componentDidMount() {
 		var currentRoute = this.props.navigation.state.routeName;
 		this.props.navigation.addListener('didFocus', (event) => {
 
 			if (currentRoute === event.state.routeName) {
-				this.animateButton(1, 500);
+				//AnimatedButton.animateButton(1, 500);
 			}
 		});
 	}
@@ -69,7 +61,6 @@ export default class Home extends Component {
 	}
 
 	componentWillUnmount() {
-		animateButton(0, 10);
 		this.props.navigation.focusListener.remove();
 	}
 
@@ -93,21 +84,12 @@ export default class Home extends Component {
 						style={styles.scaler}/>
 				</View>
 				<View style={styles.buttonGroupStyle}>
-					<TouchableOpacity style={styles.buttonStyles} onPress={this.handlePress}>
-					<Animated.View style={{	flex:1,
-											borderRadius: 5,
-											justifyContent: 'center',
-											backgroundColor:'green',
-											transform: [
-												{
-													scale: this.state.animated.interpolate({
-														inputRange: [0,1],
-														outputRange: [0,1]
-													})
-												}]}}>
-						<Text style={styles.buttonTextStyle}>Choose Game</Text>
-					</Animated.View>	
-					</TouchableOpacity>
+					<AnimatedButton buttonStyle={styles.buttonStyles}
+									animatedStyle={styles.animatedButtonStyle}
+									buttonTextStyle={styles.buttonTextStyle}
+									text="Choose Game"
+									navigation = {this.props.navigation}
+									func={this.handlePress} />
 					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Practice'})}>
 						<Text style={styles.buttonTextStyle}>Practice</Text>
 					</TouchableOpacity>
@@ -190,4 +172,10 @@ const styles = StyleSheet.create({
 		backgroundColor: 'purple',
 		transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
 	},
+	animatedButtonStyle: {
+		flex:1,
+		borderRadius: 5,
+		justifyContent: 'center',
+		backgroundColor:'green'
+	}
 });

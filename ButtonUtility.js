@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Animated,
+  Easing
 } from 'react-native';
 
 export class LetterButton extends Component {
@@ -37,3 +40,68 @@ export class LetterButton extends Component {
     );
   }
 }
+
+export class AnimatedButton extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      animated:new Animated.Value(0)
+    }
+  }
+
+  animateButton(value, duration){
+    Animated.timing(this.state.animated,{
+      toValue: value,
+      duration: duration,
+      easing: Easing.elastic(1.5),
+    }).start();
+  }
+
+  handleClick = () => {
+    // Need to check to prevent null exception.
+    this.props.onPress?.(); // Same as this.props.onPress && this.props.onPress();
+  }
+
+  componentDidMount() {
+    console.log("mounted");
+    this.animateButton(1, 500);
+
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      () => {
+        console.log("will focus");
+        this.animateButton(1, 500);
+      }
+    );
+    this.willBlurSubscription = this.props.navigation.addListener(
+      'willBlur',
+      () => {
+        console.log("will blur");
+        this.animateButton(0, 10);
+      }
+    );
+  }
+
+  componentWillUnMount() {
+    this.animateButton(0, 10);
+  }
+
+  componentDidUpdate(){
+    console.log("receive props");
+  }
+
+  render() {
+    return (
+      <TouchableOpacity style={this.props.buttonStyle} onPress={this.props.func}>
+          <Animated.View style={[this.props.animatedStyle,
+                                {transform: [{  scale: this.state.animated.interpolate({
+                                                inputRange: [0,1],
+                                                outputRange: [0,1]})
+                                            }]}
+                                ]}>
+            <Text style={this.props.buttonTextStyle}>{this.props.text}</Text>
+          </Animated.View>
+      </TouchableOpacity>
+      )
+    }
+  }
