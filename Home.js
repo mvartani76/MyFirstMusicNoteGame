@@ -22,7 +22,9 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	SafeAreaView
+	SafeAreaView,
+	Animated,
+	Easing
 } from 'react-native';
 
 export default class Home extends Component {
@@ -31,6 +33,7 @@ export default class Home extends Component {
 
 		const screenWidth = Dimensions.get('window').width;
 		this.state = {
+			animated:new Animated.Value(0),
 			musicObjectData: {	"stave_width": screenWidth / 5,
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
@@ -40,6 +43,34 @@ export default class Home extends Component {
 								"notes": [{"clef": "treble", "keys": ["c/4"], "duration": "q", "dots": 0}],
 								"voices": [{"num_beats": 1, "beat_value": 4}]}
 		}
+	}
+
+	animateButton(value, duration){
+		Animated.timing(this.state.animated,{
+			toValue: value,
+			duration: duration,
+			easing: Easing.elastic(1.5),
+		}).start();
+	}
+
+	componentDidMount() {
+		var currentRoute = this.props.navigation.state.routeName;
+		this.props.navigation.addListener('didFocus', (event) => {
+
+			if (currentRoute === event.state.routeName) {
+				this.animateButton(1, 500);
+			}
+		});
+	}
+
+	handlePress = () => {
+		this.state.animated.setValue(0);
+		this.props.navigation.navigate('GameContainer', {mode: 'Game'})
+	}
+
+	componentWillUnmount() {
+		animateButton(0, 10);
+		this.props.navigation.focusListener.remove();
 	}
 
 	render() {
@@ -62,8 +93,20 @@ export default class Home extends Component {
 						style={styles.scaler}/>
 				</View>
 				<View style={styles.buttonGroupStyle}>
-					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Game'})}>
+					<TouchableOpacity style={styles.buttonStyles} onPress={this.handlePress}>
+					<Animated.View style={{	flex:1,
+											borderRadius: 5,
+											justifyContent: 'center',
+											backgroundColor:'green',
+											transform: [
+												{
+													scale: this.state.animated.interpolate({
+														inputRange: [0,1],
+														outputRange: [0,1]
+													})
+												}]}}>
 						<Text style={styles.buttonTextStyle}>Choose Game</Text>
+					</Animated.View>	
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('GameContainer', {mode: 'Practice'})}>
 						<Text style={styles.buttonTextStyle}>Practice</Text>
