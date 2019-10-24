@@ -45,23 +45,10 @@ export default class Home extends Component {
 		}
 	}
 
-	componentDidMount() {
-		var currentRoute = this.props.navigation.state.routeName;
-		this.props.navigation.addListener('didFocus', (event) => {
-
-			if (currentRoute === event.state.routeName) {
-				//AnimatedButton.animateButton(1, 500);
-			}
-		});
-	}
-
-	handlePress = () => {
-		this.state.animated.setValue(0);
-		this.props.navigation.navigate('GameContainer', {mode: 'Game'})
-	}
-
-	componentWillUnmount() {
-		this.props.navigation.focusListener.remove();
+	// Need to pass in mynav here to be consistent with handlePress() in GameContainer
+	// Was not explicitly needed here as was in GameContainer because undefined
+	handlePress = (mynav, page, clef, mode) => {
+		mynav.navigate(page, {clef: clef, mode: mode})
 	}
 
 	render() {
@@ -89,6 +76,7 @@ export default class Home extends Component {
 									buttonTextStyle={styles.buttonTextStyle}
 									text="Choose Game"
 									navigation = {this.props.navigation}
+									value = {{page:"GameContainer",clef:"treble",mode:"Game"}}
 									func={this.handlePress} />
 					<AnimatedButton buttonStyle={styles.buttonStyles}
 									animatedStyle={styles.animatedButtonStyle}
