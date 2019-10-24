@@ -77,19 +77,22 @@ export default class Home extends Component {
 									text="Choose Game"
 									navigation = {this.props.navigation}
 									value = {{page:"GameContainer",clef:"treble",mode:"Game"}}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 					<AnimatedButton buttonStyle={styles.buttonStyles}
 									animatedStyle={styles.animatedButtonStyle}
 									buttonTextStyle={styles.buttonTextStyle}
 									text="Practice"
 									navigation = {this.props.navigation}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 					<AnimatedButton buttonStyle={styles.buttonStyles}
 									animatedStyle={styles.animatedButtonStyle}
 									buttonTextStyle={styles.buttonTextStyle}
 									text="Settings"
 									navigation = {this.props.navigation}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 				</View>
 			</SafeAreaView>
 		);

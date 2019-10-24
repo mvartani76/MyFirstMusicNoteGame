@@ -76,28 +76,32 @@ export default class GameContainer extends Component {
 									text="Treble Notes"
 									navigation = {this.props.navigation}
 									value = {{page: "Game", clef: "treble", mode: this.mode}}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 					<AnimatedButton buttonStyle={styles.buttonStyles}
 									animatedStyle={styles.animatedButtonStyle}
 									buttonTextStyle={styles.buttonTextStyle}
 									text="Bass Notes"
 									navigation = {this.props.navigation}
 									value = {{page: "Game", clef: "bass", mode: this.mode}}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 					<AnimatedButton buttonStyle={styles.buttonStyles}
 									animatedStyle={styles.animatedButtonStyle}
 									buttonTextStyle={styles.buttonTextStyle}
 									text="Rhythms"
 									navigation = {this.props.navigation}
 									value = {{page: "PickerGame", clef: "rhythm", mode: this.mode}}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 					<AnimatedButton buttonStyle={styles.buttonStyles}
 									animatedStyle={styles.animatedButtonStyle}
 									buttonTextStyle={styles.buttonTextStyle}
 									text="Symbols"
 									navigation = {this.props.navigation}
 									value = {{page: "PickerGame", clef: "symbols", mode: this.mode}}
-									func={this.handlePress} />
+									func={this.handlePress}
+									buttonMode = "navigate" />
 				</View>
 			</SafeAreaView>
 		);
