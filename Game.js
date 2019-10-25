@@ -10,7 +10,8 @@ import { StaveNote } from 'vexflow/src/stavenote';
 import { Voice } from 'vexflow/src/voice';
 import { Formatter } from 'vexflow/src/formatter';
 import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
-import { Dimensions } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
+import Modal from 'react-native-modal';
 
 import { VexFlow } from './VexUtility.js';
 
@@ -59,6 +60,8 @@ export default class Game extends Component {
 			correct: false,
 			score: 0,
 			question_number: 0,
+			correct_pct: 0,
+			isModalVisible: false,
 			musicObjectData: {	"stave_width": screenWidth / 5,
 								"stave_x_start": 2 * screenWidth / 5,
 								"stave_y_start": 125,
@@ -75,6 +78,17 @@ export default class Game extends Component {
 		this.setState({message:"Component Mounted"});
     }
 
+    // Method to check if a certain number of questions has been asked
+    // The function will check after 'delay' milliseconds
+    checkFinish(num_questions, delay) {
+
+		this.timeout = setTimeout(() => {
+			if (this.state.question_number >= num_questions) {
+				this.setState({isModalVisible: true});
+			}
+		}, delay);
+    }
+
 	handleClick = (buttonLabel) => {
 		const screenWidth = Dimensions.get('window').width;
 
@@ -89,14 +103,26 @@ export default class Game extends Component {
 				this.setState({answered: true});
 				if (buttonLabel == this.randomNote.replace(/[/]|[0-9]/g, "").toLowerCase()) {
 					console.log("correct");
-					this.setState({status: false});
-					this.setState({correct: true});
-					this.setState({score: this.state.score + 1});
+					this.setState({	status: false,
+									correct: true,
+									score: this.state.score + 1});
 				} else {
 					console.log("incorrect");
 					this.setState({correct: false});
 				}
-				this.setState({question_number: this.state.question_number + 1});
+
+				this.setState(
+					{
+						question_number: this.state.question_number + 1
+					},
+					function() {
+						this.setState(
+							{
+								correct_pct: Math.round(100*this.state.score / this.state.question_number)
+							},
+							function() {this.checkFinish(2, 1000)})
+						}
+					);
 			}
 			else {
 				this.timeout = setTimeout(() => {this._isMounted && this.displayNoteAndTimer(screenWidth, buttonLabel)}, 500);
@@ -156,6 +182,25 @@ export default class Game extends Component {
 		clearTimeout(this.timeout2);
     }
 
+	renderModalContent = () => (
+		<View style={styles.modalContent}>
+			<View style={styles.modalSubView1}>
+				<Text style={styles.modalSubView1Text}>{ this.state.correct_pct }%</Text>
+			</View>
+			<View style={styles.modalSubView2}>
+				<Text style={styles.modalSubView2Text}># of Notes: {this.state.question_number}</Text>
+				<Text style={styles.modalSubView2Text}># Notes Correct: {this.state.score}</Text>
+
+				<TouchableOpacity style={styles.modalSubView2Button} onPress={() => this.setState({isModalVisible: false})}>
+					<Text style={styles.modalSubView2ButtonText}>
+						Close
+					</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+	);
+
+
 	render() {
 		const {navigate} = this.props.navigation;
 		const screenWidth = Dimensions.get('window').width;
@@ -172,6 +217,18 @@ export default class Game extends Component {
 		return (
 			<SafeAreaView style={styles.container}>
 				<View style={styles.topContainer}>
+				<Modal isVisible={this.state.isModalVisible}
+						coverScreen={false}
+						backdropColor="#B4B3DB"
+						backdropOpacity={0.8}
+						animationIn="zoomInDown"
+						animationOut="zoomOutUp"
+						animationInTiming={600}
+						animationOutTiming={600}
+						backdropTransitionInTiming={600}
+						backdropTransitionOutTiming={600}>
+						{this.renderModalContent()}
+				</Modal>
 					<View style={styles.topTextView}>
 						<Text style={styles.welcome}>
 							{this.clef_value == "treble" ? "Treble Notes" : "Bass Notes"}!
@@ -307,5 +364,48 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		backgroundColor: 'purple',
 		transform: [{scaleX: 2.5}, {scaleY: 4.0}, {translateX: "0%"}, {translateY: "17%"}],
+	},
+	modalContent: {
+		flexDirection: 'column',
+		backgroundColor: 'white',
+		opacity: 0.6,
+		padding: 22,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 5,
+		borderColor: 'rgba(0, 0, 0, 0.1)',
+		height: 250,
+	},
+	modalSubView1: {
+		flex: 0.5,
+	},
+	modalSubView2: {
+		flex: 0.5,
+	},
+	modalSubView1Text: {
+		fontFamily: "GoodDog Plain",
+		fontSize: 40,
+		textAlign: 'center',
+		justifyContent: 'center',
+	},
+	modalSubView2Text: {
+		flex: 0.3,
+		fontFamily: "GoodDog Plain",
+		fontSize: 30,
+		justifyContent: 'center',
+		textAlign: 'center',
+	},
+	modalSubView2Button: {
+		flex: 0.4,
+		backgroundColor: 'green',
+		borderRadius: 5,
+		justifyContent: 'center',
+		marginTop: 15,
+	},
+	modalSubView2ButtonText: {
+		color: 'white',
+		fontFamily: "GoodDog Plain",
+		fontSize: 25,
+		textAlign: 'center',
 	},
 });
