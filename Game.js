@@ -10,7 +10,7 @@ import { StaveNote } from 'vexflow/src/stavenote';
 import { Voice } from 'vexflow/src/voice';
 import { Formatter } from 'vexflow/src/formatter';
 import { ReactNativeSVGContext, NotoFontPack } from 'standalone-vexflow-context';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity, Image } from 'react-native';
 import Modal from 'react-native-modal';
 
 import { VexFlow } from './VexUtility.js';
@@ -185,6 +185,9 @@ export default class Game extends Component {
 	renderModalContent = () => (
 		<View style={styles.modalContent}>
 			<View style={styles.modalSubView1}>
+			<Image
+				source={require('./assets/images/mew.png')}
+				style={{width: 70, height: 70}} />
 				<Text style={styles.modalSubView1Text}>{ this.state.correct_pct }%</Text>
 			</View>
 			<View style={styles.modalSubView2}>
@@ -385,6 +388,7 @@ const styles = StyleSheet.create({
 	modalSubView1Text: {
 		fontFamily: "GoodDog Plain",
 		fontSize: 40,
+		marginBottom: 10,
 		textAlign: 'center',
 		justifyContent: 'center',
 	},
