@@ -73,9 +73,8 @@ export default class Game extends Component {
 		}
 	}
 
-	componentDidMount = () => {
+	componentDidMount() {
 		this._isMounted = true;
-		this.setState({message:"Component Mounted"});
     }
 
     // Method to check if a certain number of questions has been asked
@@ -176,11 +175,27 @@ export default class Game extends Component {
     }
 
     // Clear timers when component unmounts
-    componentWillUnmount = () => {
+    // Since closing the modal will also navigate back
+    // to the gamecontainer screen, and the setState()
+    // causes a react warning, moved the setState() into
+    // componentWillUnmount()
+    componentWillUnmount() {
 		this._isMounted = false;
+		this.setState({isModalVisible: false});
 		clearTimeout(this.timeout1);
 		clearTimeout(this.timeout2);
     }
+
+    // Function to handle closing the modal window
+    // Tried adding conditional logic to test for mounted/unmounted
+    // but it does not appear to be working so the setState() was
+    // added into the componentWillCunmount() method
+    handleModalClose = () => {
+		//if (this._isMounted == true) {
+			//this.setState({isModalVisible: false});
+		//}
+		this.props.navigation.goBack(null);
+	}
 
 	renderModalContent = () => (
 		<View style={styles.modalContent}>
@@ -194,7 +209,7 @@ export default class Game extends Component {
 				<Text style={styles.modalSubView2Text}># of Notes: {this.state.question_number}</Text>
 				<Text style={styles.modalSubView2Text}># Notes Correct: {this.state.score}</Text>
 
-				<TouchableOpacity style={styles.modalSubView2Button} onPress={() => this.setState({isModalVisible: false})}>
+				<TouchableOpacity style={styles.modalSubView2Button} onPress={this.handleModalClose}>
 					<Text style={styles.modalSubView2ButtonText}>
 						Close
 					</Text>
